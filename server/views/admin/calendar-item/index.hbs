@@ -1,0 +1,30 @@
+<div id="content-manager" class="col-xs-12 col-md-12">
+    <a href="/admin/calendar-item/add_new" class="btn btn-success">Create New Appointment</a>
+    </br>
+    </br>
+    <style>
+        .fc-event{
+            cursor: pointer;
+        }
+    </style>
+    <div id="calendar"></div>
+</div>
+
+<script>
+
+$(document).ready(function() {
+    $('#calendar').fullCalendar({
+        eventSources: [
+            {
+                url: '/api/v1/calendar',
+                type: 'GET'
+            }
+        ],
+        eventClick: function(event) {
+            console.log(event._id);
+            window.location.href = '/admin/calendar-item/' + event._id;
+        }
+    });
+});
+
+</script>

@@ -1,0 +1,25 @@
+//
+// Layouts
+// ---------------------------
+
+.app {
+	min-width: 320px;
+	min-height: 600px;
+
+	&:after {
+		content: "";
+		display: block;
+	}
+}
+
+.region {
+	@extend %transition-all-super-slow;
+	width: 100%;
+	position: relative;
+	top: 0;
+	left: 0;
+	
+	.menu-is-open & {
+		left: -300px;
+	}
+}

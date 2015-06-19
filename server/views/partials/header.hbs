@@ -1,0 +1,63 @@
+<nav id="header" class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+
+        {{!-- Back Button --}}
+        <a href="/" class="navbar-backtobrand hidden-xs">
+            <span class="glyphicon glyphicon-arrow-left"></span>
+        </a>
+
+        {{!-- Menu Icon and Title --}}
+        <div class="navbar-header">
+            <button type="button" data-toggle="collapse" data-target=".navbar-headernav-collapse" class="navbar-toggle">
+                <span class="sr-only">Toggle section navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span></button>
+                <a href="/admin" class="active navbar-brand">HUDSON PACIFIC</a>
+        </div>
+
+        {{#if title}}
+
+        {{!-- Menu --}}
+        <div class="collapse navbar-collapse navbar-headernav-collapse">
+
+            {{!-- Menu Itens --}}
+            <ul class="nav navbar-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Pages <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li class="false"><a href="/admin/home">Home</a></li>
+                        <li class="false"><a href="/admin/about">About</a></li>
+                    </ul>
+                </li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Content <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+
+                        <li class="false"><a href="/admin/property">Properties</a></li>
+                        <li class="false"><a href="/admin/job">Carrers</a></li>
+                        <li class="false"><a href="/admin/staff">Staff</a></li>
+                        <li class="false"><a href="/admin/directors">Directors</a></li>
+                        <li class="false"><a href="/admin/media">Media Properties</a></li>
+
+                    </ul>
+                </li>
+
+                <li><a href="/admin/news">News</a></li>
+                <li><a href="/admin/newsletter">Newsletter</a></li>
+                <li><a href="/admin/user">Users</a></li>
+            </ul>
+
+            {{!-- Logout Button --}}
+            <ul class="nav navbar-nav navbar-right">
+                <li class="divider"></li>
+                <li><a href="/admin/signout" class="signout">Sign Out</a></li>
+            </ul>
+
+        </div>
+
+        {{/if}}
+
+    </div>
+</nav>

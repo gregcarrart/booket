@@ -1,0 +1,66 @@
+.container-fixed {
+	@extend %transition-all-super-slow;
+	position: fixed;
+	width: 32.5%;
+	height: 100%;
+	right: 0;
+	top: 75px;
+	margin-right: 2.5%;
+	z-index: 100;
+	background: $white;
+
+	.project-title {
+		position: relative;
+		margin-top: 6.5%;
+		margin-bottom: 3.5%;
+
+		h1 {
+			text-transform: uppercase;
+			letter-spacing: $baseLetterSpacing;
+		}
+	}
+
+	.project-meta {
+		position: relative;
+		margin-top: 5.5%;
+
+		.project-client, .project-role, .project-url, .project-desc {
+			font-size: 1.4em;
+			margin-bottom: 2.5%;
+
+			img {
+				display: none !important;
+			}
+		}
+
+		.project-url a {
+			color: $yellow;
+			text-decoration: underline;
+
+			&:hover {
+				color: $gray;
+			}
+		}
+	}
+
+	.menu-is-open & {
+		right: 300px;
+	}
+}
+
+.project-images {
+	position: relative;
+	width: 60%;
+	margin-top: 100px;
+	margin-left: 2.5%;
+
+	.project-image {
+		position: relative;
+		margin-bottom: 3.5%;
+	}
+}
+
+.header-image {
+	position: relative;
+	width: 100%;
+}

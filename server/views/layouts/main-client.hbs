@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+	<meta name="description" content="">
+	<meta name="author" content="">
+	<link rel="shortcut icon" href="assets/ico/favicon.ico">
+
+	<title>{{title}}</title>
+	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+	<link href="../public/stylesheets/style.css" rel="stylesheet">
+
+	<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+	<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+	<![endif]-->
+</head>
+<body>
+
+<nav class="main-nav">
+	<div class="nav-inner">
+		<div class="nav-logo"><a href="/">gc<span>d</span></a></div>
+
+		<div class="nav-menu-icon">
+			<div id="nav-menu-icon-inner">
+	            <span></span>
+	        </div>
+		</div>
+	</div>
+</nav>
+
+<div class="fixed-nav">
+	<ul class="nav-list">
+		<a href="/"><li {{#equalsTo title "gcdev | home"}} class="nav-active"{{/equalsTo}}>HOME</li></a>
+		<a href="/work"><li {{#equalsTo title "gcdev | work"}} class="nav-active"{{/equalsTo}}>WORK</li></a>
+		<a href="/about"><li {{#equalsTo title "gcdev | about"}} class="nav-active"{{/equalsTo}}>ABOUT</li></a>
+		<a href="/blog"><li {{#equalsTo title "gcdev | blog"}} class="nav-active"{{/equalsTo}}>BLOG</li></a>
+		<a href="/contact"><li {{#equalsTo title "gcdev | contact"}} class="nav-active"{{/equalsTo}}>CONTACT</li></a>
+	</ul>
+	<ul class="social-links">
+		<li><a href="http://www.github.com/gregcarrart" target="_blank"><i class="fa fa-github"></i></a></li>
+		<li><a href="http://www.linkedin.com/in/gregorycarr1" target="_blank"><i class="fa fa-linkedin"></i></li>
+		<li><a href="http://www.twitter.com/gregcarrart" target="_blank"><i class="fa fa-twitter"></i></a></li>
+		<li><a href="mailto:greg@gcdev.io" target="_blank"><i class="fa fa-envelope"></i></a></li>
+	</ul>
+
+</div>
+
+{{{body}}}
+
+</body>
+</html>

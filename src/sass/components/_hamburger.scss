@@ -1,0 +1,64 @@
+//
+// Hamburger
+// ---------------------------
+
+.btn-hamburger {
+    @extend %transition-all-slow;
+    display: block;
+    position: relative;
+    height: 0;
+    cursor: pointer;
+    outline: none;
+    float: right;
+    .wrapper {
+        position: absolute;
+        width: 30px;
+        height: 24px;
+        display: block;
+        transform: rotate(0deg);
+        transition: all 0.5s ease-in-out;
+        margin: 24px 0 0 -30px;
+    }
+    span {
+        position: absolute;
+        left: 0;
+        width: 100%;
+        height: 3px;
+        opacity: 1;
+        display: block;
+        background-color: $white;
+        transform: rotate(0deg);
+        transition: all 0.2s ease-in-out;
+        &:nth-child(1) {
+            top: 0;
+        }
+        &:nth-child(2),
+        &:nth-child(3) {
+            top: 11px;
+        }
+        &:nth-child(4) {
+            top: 22px;
+        }
+    }
+    .menu-is-open & {
+        background-color: transparent;
+        span {
+            &:nth-child(1) {
+                top: 11px;
+                width: 0%;
+                left: 50%;
+            }
+            &:nth-child(2) {
+                transform: rotate(45deg);
+            }
+            &:nth-child(3) {
+                transform: rotate(-45deg);
+            }
+            &:nth-child(4) {
+                top: 11px;
+                width: 0%;
+                left: 50%;
+            }
+        }
+    }
+}

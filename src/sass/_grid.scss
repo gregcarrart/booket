@@ -1,0 +1,20 @@
+// Row groups
+.row {
+    &:before,
+    &:after {
+        content: '';
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+// Column setup
+.col {
+    position: relative;
+    display: block;
+    &:first-child {
+        margin-left: 0;
+    }
+}

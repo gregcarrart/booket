@@ -1,0 +1,25 @@
+
+<div class="body-content">
+    <div class="blog-view-container">
+        <div class="blog-title"><h1>{{title}}</h1></div>
+        <div class="blog-posted"><p>{{created}}</p></div>
+        <hr>
+        <div class="blog-body">
+            {{{content}}}
+        </div>
+    </div>
+    
+    <div class="blog-fixed-container"> 
+        <div class="featured-container">
+            <h1>FEATURED POSTS</h1>
+
+            {{#each post}}
+                {{#ifCond this.featured true}}
+                <div class="featured-title">
+                    <h1><a href="/blog/{{this.title}}">{{this.title}}</a></h1>
+                </div>
+                {{/ifCond}}
+            {{/each}}
+        </div>
+    </div>
+</div>

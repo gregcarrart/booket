@@ -1,0 +1,14 @@
+//
+// Font Embeds
+// ---------------------------
+
+@font-face {
+    font-family: 'CenturyGothicReg';
+    src: url('../fonts/Century-Gothic-Regular.eot'); // ie8 hack
+    src: url('../fonts/Century-Gothic-Regular.eot?#iefix') format('embedded-opentype'),
+                url('../fonts/Century-Gothic-Regular.woff') format('woff'),
+                url('../fonts/Century-Gothic-Regular.ttf') format('truetype'),
+                url('../fonts/Century-Gothic-Regular.svg#centuryGothic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}

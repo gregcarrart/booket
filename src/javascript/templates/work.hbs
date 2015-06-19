@@ -1,0 +1,24 @@
+
+<div class="body-content">
+    <div class="container">
+        <div class="filter-nav">
+            <ul>
+                <li class="filter-nav-link filter-active" data-filter="*">ALL</li> /
+                <li class="filter-nav-link" data-filter=".Front-end">FRONT-END</li> /
+                <li class="filter-nav-link" data-filter=".Back-end">BACK-END</li> /
+                <li class="filter-nav-link" data-filter=".Flash">INTERACTIVE</li>
+            </ul>
+        </div>
+
+        <div class="work-container">
+        {{#each projects}}
+            <div class="item {{type}} visible">
+                <div class="item-image"><img src="{{heroImage}}" /></div>
+                <a href="/work/{{slug}}"><div class="item-meta">
+                    <div class="item-title"><h1>{{headline}}</h1></div>
+                </div></a>
+            </div>
+        {{/each}}
+        </div>
+    </div>
+</div>

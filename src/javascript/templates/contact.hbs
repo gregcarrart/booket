@@ -1,0 +1,40 @@
+
+<div class="body-content">
+    <div class="container">
+        <div class="contact-header">
+            <h1>GET IN TOUCH</h1>
+            <p>Have a project in mind? Send me a note!</p>
+        </div>
+
+        <div class="contact-message">
+            {{{message}}}
+        </div>
+
+        <form name="contact-form" id="contact-form" class="contact-form clear-fix" action="/contact" method="post">
+           
+            <div class="contact-field">
+                <label for="contact-form-name">NAME</label>
+                <input type="text" name="contact-form-name" id="contact-form-name" value=""/>
+            </div>
+
+            <div class="contact-field">
+                <label for="contact-form-mail">E-MAIL</label>
+                <input type="text" name="contact-form-mail" id="contact-form-mail" value=""/>
+            </div>
+
+            <div class="contact-field" id="contact-textarea">
+                <label for="contact-form-message">MESSAGE</label>
+                <textarea name="contact-form-message" id="contact-form-message" rows="1" cols="1"></textarea>
+            </div>
+
+            <div id="captcha-holder">
+                <center>{{{captcha}}}</center>
+            </div>
+
+            <div class="contact-field contact-field-button">
+                <input type="submit" id="contact-form-submit" name="contact-form-submit" class="button" value="SEND"/>
+            </div>
+        </form>
+
+    </div>
+</div>

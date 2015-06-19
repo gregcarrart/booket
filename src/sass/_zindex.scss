@@ -1,0 +1,21 @@
+//
+// Stacking order (z-index)
+// ---------------------------
+
+$zindex: (
+    header: 2000,
+    page: 1000,
+    element1: -1000
+);
+
+.header {
+    z-index: map-get($zindex, header);
+}
+
+.page {
+    z-index: map-get($zindex, page);
+}
+
+.element1 {
+    z-index: map-get($zindex, element1);
+}
