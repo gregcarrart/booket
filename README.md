@@ -1,6 +1,6 @@
 # Booket
 
-A hipster booking app - clean, simple and easy to use!
+A hipster booking app - quick, minimal and easy to use!
 
 ##v1.0
 
