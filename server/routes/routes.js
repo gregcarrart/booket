@@ -32,7 +32,7 @@ module.exports = function(app, passport, calendar) {
     //LOGIN///////////////////////////////////////////////////////////////////////
     app.get('/admin', function(req, res) {
         res.render('admin/index.hbs', {
-            title : 'CMS - Admin'
+            title : 'Booket CMS - Admin'
         });
     });
 
