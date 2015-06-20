@@ -1,7 +1,6 @@
 // load the things we need
 var mongoose = require('mongoose');
 var bcrypt   = require('bcrypt-nodejs');
-//var conn     = mongoose.createConnection('mongodb://admin:password@ds035300.mongolab.com:35300/node-auth');
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
@@ -9,18 +8,75 @@ var userSchema = mongoose.Schema({
     local            : {
         email        : String,
         password     : String,
-    }
+    },
+    name: String,
+    group: String,
+    phone: String,
+    appointments: [String],
+    visits: Number
 
 });
 
-// generating a hash
-userSchema.methods.generateHash = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+/**
+ * Methods
+ */
+userSchema.methods = {
+    uploadAndUpdate: function(images, cb) {
+        var self = this;
+
+        self.slug = self.title.toLowerCase().split(' ').join('-').replace(/[^a-zA-Z0-9-_]+/ig, '');
+
+        self.validate(function(err) {
+            if (err) return cb(err);
+
+            self.save(cb);
+        });
+    },
+
+    generateHash: function(password) {
+    	return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
+    },
+
+    validPassword: function(password) {
+    	return bcrypt.compareSync(password, this.local.password);
+    }
 };
 
-// checking if password is valid
-userSchema.methods.validPassword = function(password) {
-    return bcrypt.compareSync(password, this.local.password);
+userSchema.statics = {
+    /**
+     * Find appointments by id
+     *
+     * @param {ObjectId} id
+     * @param {Function} cb
+     * @api private
+     */
+
+    load: function(id, cb) {
+        var self = this;
+        this.findById(id)
+            .sort('order')
+            .populate('items')
+            .exec(cb);
+    },
+
+    /**
+     * List appointments
+     *
+     * @param {Object} options
+     * @param {Function} cb
+     * @api private
+     */
+
+    list: function(options, cb) {
+        var criteria = options.criteria || {},
+            self = this;
+        this.find(criteria)
+            .sort('order')
+            .populate('items')
+            .limit(options.perPage)
+            .skip(options.perPage * options.page)
+            .exec(cb);
+    }
 };
 
 // create the model for users and expose it to our app

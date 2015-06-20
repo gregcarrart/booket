@@ -1,4 +1,4 @@
-module.exports = function(app, passport, calendar) {
+module.exports = function(app, passport, calendar, customers) {
 // normal routes ===============================================================
     var validPaths = [
         '/'
@@ -36,7 +36,30 @@ module.exports = function(app, passport, calendar) {
         });
     });
 
-    //CALENDAR ITEMS ///////////////////////////////////////////////////////////////////////
+
+    
+    //CUSTOMERS///////////////////////////////////////////////////////////////////
+    app.param('customerId', customers.load);
+    app.param('customerSlug', customers.loadBySlug);
+
+    //list appointments
+    app.get('/admin/customers', isLoggedIn, customers.index, passport.authenticate('local', { session: false }));
+    app.get('/admin/customers/page/:page?', isLoggedIn, customers.index, passport.authenticate('local', { session: false }));
+
+    //create appointments
+    app.post('/admin/customers', isLoggedIn, customers.create, passport.authenticate('google', { session: false }));
+    app.get('/admin/customers/add_new', isLoggedIn, customers.new, passport.authenticate('local', { session: false }));
+
+    //delete appointments
+    app.get('/admin/customers/:customerId/destroy', isLoggedIn, customers.destroy, passport.authenticate('local', { session: false }));
+
+    //edit appointments (full editor)
+    app.post('/admin/customers/:customerId', isLoggedIn, customers.update, passport.authenticate('local', { session: false }));
+    app.get('/admin/customers/:customerId', isLoggedIn, customers.edit, passport.authenticate('local', { session: false }));
+
+
+
+    //CALENDAR ITEMS /////////////////////////////////////////////////////////////
     app.param('calendarId', calendar.load);
     app.param('calendarSlug', calendar.loadBySlug);
 

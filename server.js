@@ -15,6 +15,7 @@ var express         = require('express'),
     session      = require('express-session'),
 
     calendar     = require('./server/controllers/calendar.js'),
+    customers    = require('./server/controllers/customers.js'),
 
     exphbs = require('express-handlebars'),
     config = require('config');
@@ -121,7 +122,7 @@ if (!process.env['ASSETS_URL']) {
 }
 
 // routes ======================================================================
-require('./server/routes/routes.js')(app, passport, calendar); // load our routes and pass in our app and fully configured passport
+require('./server/routes/routes.js')(app, passport, calendar, customers); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
 app.listen(port);
