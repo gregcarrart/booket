@@ -14,7 +14,6 @@ var userSchema = mongoose.Schema({
     phone: String,
     appointments: [String],
     visits: Number
-
 });
 
 /**
@@ -24,10 +23,11 @@ userSchema.methods = {
     uploadAndUpdate: function(images, cb) {
         var self = this;
 
-        self.slug = self.title.toLowerCase().split(' ').join('-').replace(/[^a-zA-Z0-9-_]+/ig, '');
-
         self.validate(function(err) {
             if (err) return cb(err);
+
+            self.local.email = self.email;
+            self.local.password = bcrypt.hashSync(self.password, bcrypt.genSaltSync(8), null);
 
             self.save(cb);
         });

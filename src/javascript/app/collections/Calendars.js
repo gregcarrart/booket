@@ -1,6 +1,7 @@
 var BaseCollection = require('collections/BaseCollection'),
     _ = require('lodash'),
     Promise = require('bluebird'),
+    moment = require('moment'),
     Calendar = Backbone.Model;
 
 module.exports = BaseCollection.extend({
@@ -23,5 +24,16 @@ module.exports = BaseCollection.extend({
         return this.fullCollection.findWhere({
             slug: slug
         });
+    },
+
+    searchByDate: function(date) {
+        var searchDate = new Date(date);
+        var momentDate = moment(searchDate);
+
+        var filteredCollection = _.filter(this.fullCollection.models, function (data) {
+            return moment(searchDate).isSame(data.get('date'));
+        });
+
+        this.reset(filteredCollection);
     }
 });

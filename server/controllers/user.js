@@ -45,10 +45,10 @@ exports.index = function(req, res){
     User.list(options, function(err, users) {
         if (err) return res.render('500');
         User.count().exec(function(err, count) {
-            return res.render('admin/customers/index', {
+            return res.render('admin/users/index', {
                 user: req.user,
                 layout: 'default-admin',
-                title: 'Customers',
+                title: 'Users',
                 users: users,
                 page: page + 1,
                 pages: Math.ceil(count / perPage),
@@ -60,9 +60,9 @@ exports.index = function(req, res){
 };
 
 exports.new = function(req, res) {
-    return res.render('admin/customers/new', {
+    return res.render('admin/users/new', {
         layout: 'default-admin',
-        title: 'New Customer',
+        title: 'New User',
         user: new User({}),
         message: req.flash('success'),
         error:req.flash('error')
@@ -81,26 +81,27 @@ exports.create = function(req, res) {
                 req.flash('error', 'There was an error');
             }
 
-            return res.redirect('/admin/customer/' + user._id);
+            return res.redirect('/admin/user/' + user._id);
         });
     });
 };
 
 exports.destroy = function(req, res) {
-    var user = req.user;
-    user.remove(function(err) {
+    User.findById(req.params.userId).remove(function(err) {
         req.flash('success', 'Information updated');
-        res.redirect('/admin/customers');
+        return res.redirect('/admin/users');
     });
 };
 
 exports.edit = function(req, res) {
-    return res.render('admin/customers/edit', {
-        layout: 'default-admin',
-        title: 'Edit Customer Details',
-        user: req.user,
-        message: req.flash('success'),
-        error:req.flash('error')
+    User.findById(req.params.userId, function(err, user) {
+        return res.render('admin/users/edit', {
+            layout: 'default-admin',
+            title: 'Edit User Details',
+            user: user,
+            message: req.flash('success'),
+            error:req.flash('error')
+        });
     });
 };
 
@@ -108,20 +109,20 @@ exports.update = function(req, res) {
     var form = new multiparty.Form();
     form.parse(req, function(err, fields, files) {
 
-        var user = req.user;
-        user = extend(user, fields);
+        User.findById(req.params.userId, function(err, user) {
+            user = extend(user, fields);
 
-        user.uploadAndUpdate(files, function(err) {
-            if (!err) {
-                req.flash('success', 'Information updated');
-            } else {
-                req.flash('error', 'There was an error');
-            }
+            user.uploadAndUpdate(files, function(err) {
+                if (!err) {
+                    req.flash('success', 'Information updated');
+                } else {
+                    req.flash('error', 'There was an error');
+                }
 
-            return res.redirect('/admin/customers/' + user._id);
+                return res.redirect('/admin/users');
+            });
         });
     });
-
 };
 
 exports.all = function(req, res) {

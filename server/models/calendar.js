@@ -59,8 +59,6 @@ calendarSchema.methods = {
             var startDateAndTime = moment(self.date).hour(self.time);
             var endDateAndTime = moment(startDateAndTime).add(1, 'h');
 
-            console.log(startDateAndTime);
-
             self.start = startDateAndTime;
             self.end = endDateAndTime;
             self.reserved = true;

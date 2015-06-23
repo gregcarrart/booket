@@ -1,12 +1,19 @@
 <div class="body-content">
-   <h1>Online booking</h1>
+    <h1>Online booking</h1>
 
-   <button>Booket!</button>
-   <br>
-   <p>Date: <input type="text" id="datepicker"></p>
-   <br>
-   For Mobile
-   <p>Date: <input type="date"></p>
+    <br>
+    <p>Date: <input type="text" id="datepicker"></p>
 
-   <p>© 2015 greg carr</p>
+    <div class="module">
+        <h1>Available Times</h1>
+        <select>
+            <option disabled selected value="">Select Time</option>
+            {{#each times}}
+            <option value="{{this}}">{{this}}:00</option>
+            {{/each}}
+        </select>
+    </div>
+   
+    <buton>Next</button>
+
 </div>

@@ -1,4 +1,4 @@
-module.exports = function(app, passport, calendar, customers) {
+module.exports = function(app, passport, calendar, user) {
 // normal routes ===============================================================
     var validPaths = [
         '/'
@@ -12,8 +12,7 @@ module.exports = function(app, passport, calendar, customers) {
         });
     });
 
-    /*app.get('/signup', function(req, res) {
-
+    app.get('/signup', function(req, res) {
         // render the page and pass in any flash data if it exists
         res.render('admin/sign-up.hbs', { message: req.flash('signupMessage') });
     });
@@ -23,7 +22,7 @@ module.exports = function(app, passport, calendar, customers) {
         successRedirect : '/admin/twitter-approval', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
-    }));*/
+    }));
     
     //EMAIL
     /*app.post('/contact', contact.submit);*/
@@ -37,25 +36,25 @@ module.exports = function(app, passport, calendar, customers) {
     });
 
 
-    
+
     //CUSTOMERS///////////////////////////////////////////////////////////////////
-    app.param('customerId', customers.load);
-    app.param('customerSlug', customers.loadBySlug);
+    app.param('userId', user.load);
+    app.param('userId', user.loadBySlug);
 
-    //list appointments
-    app.get('/admin/customers', isLoggedIn, customers.index, passport.authenticate('local', { session: false }));
-    app.get('/admin/customers/page/:page?', isLoggedIn, customers.index, passport.authenticate('local', { session: false }));
+    //list user
+    app.get('/admin/users', isLoggedIn, user.index, passport.authenticate('local', { session: false }));
+    app.get('/admin/users/page/:page?', isLoggedIn, user.index, passport.authenticate('local', { session: false }));
 
-    //create appointments
-    app.post('/admin/customers', isLoggedIn, customers.create, passport.authenticate('google', { session: false }));
-    app.get('/admin/customers/add_new', isLoggedIn, customers.new, passport.authenticate('local', { session: false }));
+    //create user
+    app.post('/admin/users', isLoggedIn, user.create, passport.authenticate('local', { session: false }));
+    app.get('/admin/users/add_new', isLoggedIn, user.new, passport.authenticate('local', { session: false }));
 
-    //delete appointments
-    app.get('/admin/customers/:customerId/destroy', isLoggedIn, customers.destroy, passport.authenticate('local', { session: false }));
+    //delete user
+    app.get('/admin/users/:userId/destroy', isLoggedIn, user.destroy, passport.authenticate('local', { session: false }));
 
-    //edit appointments (full editor)
-    app.post('/admin/customers/:customerId', isLoggedIn, customers.update, passport.authenticate('local', { session: false }));
-    app.get('/admin/customers/:customerId', isLoggedIn, customers.edit, passport.authenticate('local', { session: false }));
+    //edit user (full editor)
+    app.post('/admin/users/:userId', isLoggedIn, user.update, passport.authenticate('local', { session: false }));
+    app.get('/admin/users/:userId', isLoggedIn, user.edit, passport.authenticate('local', { session: false }));
 
 
 
