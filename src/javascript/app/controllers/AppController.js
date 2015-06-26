@@ -16,6 +16,7 @@ var app = require('app/app'),
     NavView = require('views/NavView'),
     AboutView = require('views/AboutView'),
     ContactView = require('views/ContactView'),
+    AppointmentView = require('views/AppointmentView'),
 
     // Collections
     Calendars = require('collections/Calendars.js');
@@ -115,6 +116,18 @@ module.exports = Backbone.Marionette.Controller.extend({
         app.regionMain.show(new ContactView({
             title: pageTitle
         }));
+    },
+
+    submitAppointment: function () {
+        pageTitle = siteTitle + 'select time';
+        document.title = pageTitle;
+
+        var view = new AppointmentView({
+            collection: this.collections.calendars,
+            title: pageTitle
+        });
+
+        app.regionMain.show(view);
     },
 
     defaultHandler: function (route) {

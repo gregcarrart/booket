@@ -11,3 +11,4 @@ module.exports.RESIZE_WARNING_CLASS = 'your-aspect-ratio-is-jacked';
 module.exports.TRANSITION_IN_CLASS = 'is-transitioning-in';
 module.exports.SECTION_HEADER_EXPAND = 'section-header-expand';
 module.exports.ASSETS_URL = window.assetsUrl || '/';
+module.exports.GMAPS_API_KEY = 'AIzaSyCPcEhbLzeh0KFdYBDSVqqn9pM89VAfQLk';

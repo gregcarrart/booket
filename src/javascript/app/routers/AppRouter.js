@@ -8,6 +8,7 @@ var AppRouter = Marionette.AppRouter.extend({
     appRoutes: {
         '(/)': 'home',
         'about(/)': 'about',
+        'submit-appointment(/)': 'submitAppointment',
         'contact(/)': 'contact',
         '*default': 'defaultHandler'
     },

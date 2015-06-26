@@ -3,6 +3,6 @@ var Backbone = require('backbone'),
 
 module.exports = Backbone.Model.extend({
     idAttribute: '_id',
-    urlRoot: '/contact',
+    urlRoot: '/submit-appointment',
     type: 'POST'
 });

@@ -6,7 +6,6 @@ var express         = require('express'),
     flash           = require('connect-flash'),
     fs              = require('fs'),
     aws             = require('aws-sdk'),
-    nodemailer      = require('nodemailer'),
     path            = require('path'),
 
     morgan       = require('morgan'),
@@ -18,7 +17,8 @@ var express         = require('express'),
     user    = require('./server/controllers/user.js'),
 
     exphbs = require('express-handlebars'),
-    config = require('config');
+    config = require('config'),
+    transporter;
 
 //Detect NODE_ENV
 switch(config.util.getEnv('NODE_ENV')){

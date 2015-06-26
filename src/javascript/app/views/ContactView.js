@@ -3,7 +3,6 @@ var app = require('app/app'),
     $ = require('jquery'),
     helpers = require('utils/helpers'),
     constants = require('utils/constants'),
-    Email = require('../models/email'),
     template = require('templates/contact.hbs');
 
 module.exports = BaseLayoutView.extend({

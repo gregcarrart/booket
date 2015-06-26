@@ -5,7 +5,46 @@ var Calendar     = require('../models/calendar'),
     config = require('config'),
     multiparty = require('multiparty'),
     gcal = require('google-calendar'),
-    extend = require('util')._extend;
+    nodemailer = require('nodemailer'),
+    extend = require('util')._extend,
+    moment = require('moment'),
+    transporter;
+
+//Detect NODE_ENV
+switch(config.util.getEnv('NODE_ENV')){
+    case 'dev':
+        var configDB = config.get('Dev');
+
+        transporter = nodemailer.createTransport({
+            service: configDB.emailClient,
+            auth: {
+                user: configDB.emailUser,
+                pass: configDB.emailPass
+            }
+        });
+
+        var destinationEmail = configDB.emailUser;
+        var clientName = configDB.clientName;
+         
+        break;
+
+    case 'production':
+        transporter = nodemailer.createTransport({
+            service: process.env.EMAIL_CLIENT,
+            auth: {
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
+            }
+        });
+
+        var destinationEmail = process.env.EMAIL_USER;
+        var clientName = process.env.CLIENT_NAME;
+        
+        break;
+
+    default:
+        console.log('env error');
+}
 
 exports.load = function(req, res, next, id) {
     Calendar.load(id, function(err, calendar) {
@@ -91,6 +130,76 @@ exports.create = function(req, res) {
                 
             });*/
             return res.redirect('/admin/calendar-item/');
+        });
+    });
+};
+
+exports.clientCreate = function(req, res) {
+    var calendar = new Calendar({
+        title: req.body.title,
+        date: req.body.date,
+        time: req.body.time,
+        service: req.body.service,
+        email: req.body.email,
+        phone: req.body.phone,
+        request: req.body.request
+    });
+
+    var dateToDate = new Date(req.body.date);
+    var momentDate = moment(dateToDate).format("MMM Do YYYY");
+    var timeN = parseInt(req.body.time);
+    var phoneString = req.body.phone;
+    var phoneNumber = '(' + phoneString.slice(0, 3) + ') ' + phoneString.slice(3, 6) + '-' + phoneString.slice(6);
+   
+    if (timeN > 12) {
+        timeN = timeN - 12;
+    }
+
+    var formatTime = (timeN + ':00' + (timeN < 12 && timeN > 9 ? 'am' : 'pm'));
+
+
+    calendar.uploadAndUpdate(null, function(err) {
+        if (!err) {
+            req.flash('success', 'Information updated');
+        } else {
+            req.flash('error', 'There was an error');
+        }
+
+        var emailVal = req.body.email;
+        var nameVal = req.body.date;
+        var messageValToAdmin = 'Hello,<br><br>I would like to set an appointment for ' + momentDate + ' at ' + formatTime + '. My phone number is ' + phoneNumber +'.<br><br>Thank you,<br>' + req.body.title;
+        var messageValToUser = 'Hello,<br><br>Thank you for setting an appointment on ' + momentDate + ' at ' + formatTime + '. Please reply to this email if anything changes or you cannot make your appointment. Look forward to seeing you!<br><br>Thank you,<br>' + clientName;
+
+        var mailOptionsToAdmin= {
+            from: emailVal, // sender address
+            to: destinationEmail, // list of receivers. This is whoever you want to get the email when someone hits submit
+            subject: 'New Appointment for ' + momentDate + ' - booket scheduling app', // Subject line
+            html: messageValToAdmin // plaintext body
+        };
+
+        var mailOptionsToUser = {
+            from: destinationEmail, // sender address
+            to: emailVal, // list of receivers. This is whoever you want to get the email when someone hits submit
+            subject: 'Thank you! Your appointment is confirmed with ' + clientName + ' - booket scheduling app', // Subject line
+            html: messageValToUser // plaintext body
+        }
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptionsToAdmin, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Message sent: ' + info.response);
+            }
+        });
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptionsToUser, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Message sent: ' + info.response);
+            }
         });
     });
 };

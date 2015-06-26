@@ -80,6 +80,14 @@ module.exports = function(app, passport, calendar, user) {
     //API
     app.get('/api/v1/calendar', calendar.all);
 
+
+
+    //post appointment
+    app.post('/submit-appointment', calendar.clientCreate);
+
+
+
+
     // LOGOUT ==============================
     app.get('/logout', function(req, res) {
         req.logout();

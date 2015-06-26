@@ -56,6 +56,13 @@ calendarSchema.methods = {
         self.validate(function(err) {
             if (err) return cb(err);
 
+            var time = parseInt(self.time);
+
+            if (time < 10) {
+                self.time = time + 12;
+                self.time.toString();
+            }
+
             var startDateAndTime = moment(self.date).hour(self.time);
             var endDateAndTime = moment(startDateAndTime).add(1, 'h');
 
