@@ -28,10 +28,15 @@ module.exports = BaseCollection.extend({
 
     searchByDate: function(date) {
         var searchDate = new Date(date);
-        var momentDate = moment(searchDate);
 
         var filteredCollection = _.filter(this.fullCollection.models, function (data) {
-            return moment(searchDate).isSame(data.get('date'));
+            var dateString = data.get('date');
+            dateString = dateString.substring(0,10).split('-');
+            dateString = dateString[1] + '-' + dateString[2] + '-' + dateString[0];
+            
+            var dataDate = new Date(dateString);
+            
+            return moment(searchDate).isSame(dataDate);
         });
 
         this.reset(filteredCollection);
