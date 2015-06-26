@@ -81,7 +81,7 @@ exports.create = function(req, res) {
                 req.flash('error', 'There was an error');
             }
 
-            return res.redirect('/admin/user/' + user._id);
+            return res.redirect('/admin/users/' + user._id);
         });
     });
 };
