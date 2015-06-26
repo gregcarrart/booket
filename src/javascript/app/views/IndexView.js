@@ -63,6 +63,8 @@ module.exports = BaseLayoutView.extend({
         helpers.scrollTo('.header');
         this.ui.win = $(window);
         
+        this.collection.fetch();
+        
         function nonWorkingDates(date){
             var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
             var closedDates = [];
@@ -88,7 +90,6 @@ module.exports = BaseLayoutView.extend({
 
         this.ui.formDate.change(_.bind(function() {
             this.ui.formTime.html('');
-            this.collection.fetch();
             this.collection.searchByDate(this.ui.formDate.val());
             this.displayTimes();
         }, this));
