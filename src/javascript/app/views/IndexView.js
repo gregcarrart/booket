@@ -149,7 +149,7 @@ module.exports = BaseLayoutView.extend({
                 request: formRequests
             });
 
-            app.appRouter.navigate('/submit-appointment', { trigger: true });
+            app.appRouter.navigate('/success', { trigger: true });
         }
     },
 

@@ -118,8 +118,8 @@ module.exports = Backbone.Marionette.Controller.extend({
         }));
     },
 
-    submitAppointment: function () {
-        pageTitle = siteTitle + 'select time';
+    success: function () {
+        pageTitle = siteTitle + 'thank you';
         document.title = pageTitle;
 
         var view = new AppointmentView({

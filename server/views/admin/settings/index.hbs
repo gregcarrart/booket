@@ -1,0 +1,100 @@
+<style type="text/css">
+.bootstrap-tagsinput {
+    width: 100%;
+}
+.label {
+    line-height: 2 !important;
+}
+.label-info {
+    background-color: #5bc0de;
+}
+
+.bootstrap-switch.bootstrap-switch-small {
+    min-width: 67px;
+}
+
+.bootstrap-switch {
+    float: right;
+}
+</style>
+{{{settings.name}}}
+<div id="post-container" class="col-xs-12 col-md-12">
+    <div class="row-fluid">
+        <h2>Booket Settings</h2>
+    </div>
+    
+    <div class="well col-xs-12 col-md-12">
+        <div class="col-xs-12 col-md-12">
+            <p><span style="color:#ff0000">*</span> = Required</p>
+        </div>
+        <form class="col-xs-12 col-md-12" method="post" action="/admin/settings/{{settings._id}}" enctype="multipart/form-data" role="form">
+            <label>Business Name<span style="color:#ff0000;">*</span>:</label>
+            <input type="text" class="form-control" name="name" value="{{settings.name}}" required>
+            <br>
+            <label>Address<span style="color:#ff0000;">*</span>:</label>
+            <input type="text" class="form-control" name="address" value="{{settings.address}}" required>
+            <br>
+            <label>Phone<span style="color:#ff0000;">*</span>:</label>
+            <input type="tel" class="form-control" name="phone" value="{{settings.phone}}" required>
+            <br>
+            <label>Hours:</label>
+            <div class="col-xs-12" style="margin-bottom: 20px;">
+                <div class="col-xs-12" style="margin-bottom: 10px;"><div class="col-xs-12 col-md-2">Monday:</div><div class="col-xs-12 col-md-2">{{{hours 'monday' 'open'}}}</div><div class="col-xs-1" style="text-align: center;">to</div><div class="col-xs-12 col-md-2">{{{hours 'monday' 'close'}}}</div><div class="col-xs-12 col-md-2">Closed: <input type="checkbox" name="monday"/></div></div>
+                <div class="col-xs-12" style="margin-bottom: 10px;"><div class="col-xs-12 col-md-2">Tuesday:</div><div class="col-xs-12 col-md-2">{{{hours 'tuesday' 'open'}}}</div><div class="col-xs-1" style="text-align: center;">to</div><div class="col-xs-12 col-md-2">{{{hours 'tuesday' 'close'}}}</div><div class="col-xs-12 col-md-2">Closed: <input type="checkbox" name="tuesday"/></div></div>
+                <div class="col-xs-12" style="margin-bottom: 10px;"><div class="col-xs-12 col-md-2">Wednesday:</div><div class="col-xs-12 col-md-2">{{{hours 'wednesday' 'open'}}}</div><div class="col-xs-1" style="text-align: center;">to</div><div class="col-xs-12 col-md-2">{{{hours 'wednesday' 'close'}}}</div><div class="col-xs-12 col-md-2">Closed: <input type="checkbox" name="wednesday"/></div></div>
+                <div class="col-xs-12" style="margin-bottom: 10px;"><div class="col-xs-12 col-md-2">Thursday:</div><div class="col-xs-12 col-md-2">{{{hours 'thursday' 'open'}}}</div><div class="col-xs-1" style="text-align: center;">to</div><div class="col-xs-12 col-md-2">{{{hours 'thursday' 'close'}}}</div><div class="col-xs-12 col-md-2">Closed: <input type="checkbox" name="thursday"/></div></div>
+                <div class="col-xs-12" style="margin-bottom: 10px;"><div class="col-xs-12 col-md-2">Friday:</div><div class="col-xs-12 col-md-2">{{{hours 'friday' 'open'}}}</div><div class="col-xs-1" style="text-align: center;">to</div><div class="col-xs-12 col-md-2">{{{hours 'friday' 'close'}}}</div><div class="col-xs-12 col-md-2">Closed: <input type="checkbox" name="friday"/></div></div>
+                <div class="col-xs-12" style="margin-bottom: 10px;"><div class="col-xs-12 col-md-2">Saturday:</div><div class="col-xs-12 col-md-2">{{{hours 'saturday' 'open'}}}</div><div class="col-xs-1" style="text-align: center;">to</div><div class="col-xs-12 col-md-2">{{{hours 'saturday' 'close'}}}</div><div class="col-xs-12 col-md-2">Closed: <input type="checkbox" name="saturday"/></div></div>
+                <div class="col-xs-12" style="margin-bottom: 10px;"><div class="col-xs-12 col-md-2">Sunday:</div><div class="col-xs-12 col-md-2">{{{hours 'sunday' 'open'}}}</div><div class="col-xs-1" style="text-align: center;">to</div><div class="col-xs-12 col-md-2">{{{hours 'sunday' 'close'}}}</div><div class="col-xs-12 col-md-2">Closed: <input type="checkbox" name="sunday"/></div></div>
+            </div>
+            <br>
+            <label>Services (Hit "Enter" after each entry):</label>
+            <input type="text" class="form-control" data-role="tagsinput" name="services" />
+            <br>
+            <label>Modules:</label>
+            <div class="col-xs-12">
+                <div class="col-xs-12 col-md-6">
+                    <div>
+                        <span>Show Available Services</span>
+                        <input type="checkbox" name="showServices" class="bootstrap-switch" data-size="small" data-on-color="success" {{#if settings.showServices}}checked{{/if}}>
+                    </div>
+                    <br>
+                    <div>
+                        <span>Ask For Phone</span>
+                        <input type="checkbox" name="showPhone" class="bootstrap-switch" data-size="small" data-on-color="success" {{#if settings.showPhone}}checked{{/if}}>
+                    </div>
+                    <br>
+                    <div>
+                        <span>Show Requests</span>
+                        <input type="checkbox" name="showRequests" class="bootstrap-switch" data-size="small" data-on-color="success" {{#if settings.showRequests}}checked{{/if}}>
+                    </div>
+                    <br>
+                    <div>
+                        <span>Show Business Location</span>
+                        <input type="checkbox" name="showMap" class="bootstrap-switch" data-size="small" data-on-color="success" {{#if settings.showMap}}checked{{/if}}>
+                    </div>
+                    <br>
+                    <div>
+                        <span>Show Header Image (Coming Soon)</span>
+                        <input type="checkbox" name="showHeader" class="bootstrap-switch" data-size="small" data-on-color="success" disabled>
+                    </div>
+                    <br>
+                    <div>
+                        <span>Show Logo (Coming Soon)</span>
+                        <input type="checkbox" name="showServices" class="bootstrap-switch" data-size="small" data-on-color="success" disabled>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-12 col-sm-6">
+                    <button type="submit" class="btn btn-success">Save Settings</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+$('.bootstrap-switch').bootstrapSwitch();
+</script>

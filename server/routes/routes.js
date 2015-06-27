@@ -1,4 +1,4 @@
-module.exports = function(app, passport, calendar, user) {
+module.exports = function(app, passport, calendar, user, settings) {
 // normal routes ===============================================================
     var validPaths = [
         '/'
@@ -36,8 +36,14 @@ module.exports = function(app, passport, calendar, user) {
     });
 
 
+    //INFO PAGE////////////////////////////////////////////////////////////////
+    app.param('settingsId', settings.load);
 
-    //CUSTOMERS///////////////////////////////////////////////////////////////////
+    app.get('/admin/settings', isLoggedIn, settings.index, passport.authenticate('local', { session: false }));
+    app.post('/admin/settings/:settingsId', isLoggedIn, settings.update, passport.authenticate('local', { session: false }));
+
+
+    //USERS/////////////////////////////////////////////////////////////////////
     app.param('userId', user.load);
     app.param('userId', user.loadBySlug);
 
