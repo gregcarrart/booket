@@ -1,0 +1,53 @@
+//
+// Page: Nav
+// ---------------------------
+.header-nav {
+	background-color: $adminRed1;
+
+	#header-logo {
+		background-color: $adminRed2;
+		background-image: url(../images/logo.svg);
+		background-size: 70%;
+  		background-repeat: no-repeat;
+  		background-position: 80% 170%;
+	}
+
+	#header-dashboard {
+		background-image: url(../images/dashboard.svg);
+		background-size: 80%;
+  		background-position: 50% 40%;
+	}
+
+	#header-calendar {
+		background-image: url(../images/calendar.svg);
+		background-size: 80%;
+  		background-position: 50% 40%;
+	}
+
+	#header-customers {
+		background-image: url(../images/customers.svg);
+		background-size: 80%;
+  		background-position: 50% 40%;
+	}
+}
+
+#nav-left {
+	height: 100%;
+	position: absolute;
+	background-color: $adminGray;
+
+	li {
+		position: relative;
+		width: 100%;
+
+		.nav-left-item {
+			padding: 16.666% 25%;
+
+			a {
+				color: $white;
+				font-size: 1.4em;
+				text-decoration: none;
+			}
+		}
+	}
+}

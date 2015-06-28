@@ -1,0 +1,4 @@
+$grid-columns: 16;
+
+@include grid($grid-columns);
+@include grid($grid-columns, "xl");

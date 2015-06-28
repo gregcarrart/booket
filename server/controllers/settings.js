@@ -60,10 +60,9 @@ exports.update = function(req, res) {
             fields.showMap.toString() === 'on' ? true : false;
         }
         var settings = req.settings;
+        settings.extend(settings, fields);
         
-        settings.update();
-        
-        settings.update(files, function(err) {
+        settings.uploadAndUpdate(files, function(err) {
             if (!err) {
                 req.flash('success', 'Information updated');
             } else {

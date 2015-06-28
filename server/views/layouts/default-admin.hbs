@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>{{title}}</title>
-	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootswatch/3.2.0/cosmo/bootstrap.min.css">
+	<link rel="stylesheet" href="{{assetsUrl}}css/styles.css">
 	<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.css">
 	<link rel="stylesheet" href="//cdn.jsdelivr.net/bootstrap.tagsinput/0.4.2/bootstrap-tagsinput.css" />
@@ -10,7 +10,6 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/css/bootstrap2/bootstrap-switch.min.css">
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 	<script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script src="//tinymce.cachefly.net/4.0/tinymce.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.3/moment.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.3.2/fullcalendar.js"></script>
@@ -19,37 +18,45 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-switch/3.3.2/js/bootstrap-switch.min.js"></script>
 </head>
 <body>
-<div class="container">
+<div class="admin-container">
 
-	<div class="container-fluid">
-		<nav class="navbar navbar-default" role="navigation">
-			<!-- Brand and toggle get grouped for better mobile display -->
-			<div class="navbar-header">
-			  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-				<span class="sr-only">Toggle navigation</span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			  </button>
-			  <a class="navbar-brand" href="/">booket</a>
-			</div>
+	<div class="row header-nav">
+		<div class="col col-2 square nav-item" id="header-logo"></div>
+		<div class="col col-2 square nav-item {{#equalsTo title "Dashboard"}} class="active"{{/equalsTo}}" id="header-dashboard"><a href="/admin/dashboard"></a></div>
+		<div class="col col-2 square nav-item {{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}" id="header-calendar"><a href="/admin/calendar-item"></a></div>
+		<div class="col col-2 square nav-item {{#equalsTo title "Customers"}} class="active"{{/equalsTo}}" id="header-customers"><a href="/admin/customers"></a></div>
+	</div>
 
-			<!-- Collect the nav links, forms, and other content for toggling -->
-			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-			  <ul class="nav navbar-nav">
-				<li{{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}><a href="/admin/calendar-item">Calendar</a></li>
-				<li{{#equalsTo title "Settings"}} class="active"{{/equalsTo}}><a href="/admin/settings">Settings</a></li>
-				<li{{#equalsTo title "Users"}} class="active"{{/equalsTo}}><a href="/admin/users">Users</a></li>
-			  </ul>
+	<div class="row">
+		<div class="col col-2" id="nav-left">
+			<ul>
+				<li{{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}>
+					<div class="nav-left-item table">
+						<a href="/admin/bookings">Bookings</a>
+					</div>
+				</li>
+				<li{{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}>
+					<div class="nav-left-item table">
+						<a href="/admin/settings">Settings</a>
+					</div>
+				</li>
+				<li{{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}>
+					<div class="nav-left-item table">
+						<a href="/admin/account">Account</a>
+					</div>
+				</li>
+				<li{{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}>
+					<div class="nav-left-item table">
+						<a href="/logout">Logout</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
 
-			  <ul class="nav navbar-nav navbar-right">
-				<li><a href="/logout">Logout</a></li>
-			  </ul>
-			</div><!-- /.navbar-collapse -->
-		</nav>
-
+	<div class="body-container">
 		{{{body}}}
-
+	</div>
 
 		<script src="https://tablednd.googlecode.com/svn-history/r7/trunk/stable/jquery.tablednd.js"></script>
 </body>

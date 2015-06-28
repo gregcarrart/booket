@@ -39,6 +39,11 @@
 @import "animations"; // CSS3 Keyframe animations
 @import "utilities"; // Must be last to override
 
+//admin
+
+@import "admin/nav.scss";
+@import "admin/body.scss";
+
 
 // Media Queries
 
@@ -62,9 +67,19 @@
     @import "mq/992";
 }
 
+// 1200px
+@media (min-width: 1200px) {
+	@import "mq/1200";
+}
+
 // 1382px
 @media (min-width: 1382px) {
     @import "mq/1382";
+}
+
+// 2000px
+@media (min-width: 2000px) {
+	@import "mq/2000";
 }
 
 // 2x
