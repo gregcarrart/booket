@@ -1,0 +1,25 @@
+<div class="admin-body">
+    <div class="row-fluid">
+        <h2>Bookings</h2>
+        {{#each calendar}}
+        <div class="booking-module">
+            <div class="booking-name">
+            	{{title}}
+            </div>
+            <div class="booking-date">
+            	{{date}}
+            </div>
+            <div class="booking-time">
+            	{{time}}
+            </div>
+            <button class="booking-edit btn primary">
+            	<a href="/admin/calendar-item/{{_id}}">Edit</a>
+            </button>
+            <button class="booking-edit btn danger">
+            	<a href="/admin/calendar-item/{{_id}}/destroy">Delete</a>
+            </button>
+        </div>
+        {{/each}}
+
+    </div>
+</div>

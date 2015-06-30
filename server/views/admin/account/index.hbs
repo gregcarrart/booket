@@ -1,0 +1,27 @@
+<div class="admin-body">
+    <div class="admin-body-inner">
+        <h2>Bookings</h2>
+        
+        <div class="admin-module">
+            <form method="post" action="/admin/account/{{user._id}}" enctype="multipart/form-data" role="form">
+                <label>Name:</label>
+                <input type="text" class="form-control" name="name" value="{{user.name}}" required>
+                <br>
+                <label>E-mail<span style="color:#ff0000;">*</span>:</label>
+                <input type="email" class="form-control" name="email" value="{{user.local.email}}" required>
+                <br>
+                <label>Password:</label>
+                <input type="password" class="form-control" name="password" placeholder="Enter New Password" id="pass1" required>
+                <br>
+                <label>Re-enter Password:</label>
+                <input type="password" class="form-control" name="password-check" placeholder="Re-enter New Password" id="pass2" onkeyup="checkPass(); return false;" required>
+                <span id="confirmMessage" class="confirmMessage"></span>
+                <br>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6">
+                        <button type="submit" class="btn btn-success">Update</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+</div>

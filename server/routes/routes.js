@@ -1,4 +1,4 @@
-module.exports = function(app, passport, calendar, user, settings) {
+module.exports = function(app, passport, calendar, user, settings, dashboard, bookings, account) {
 // normal routes ===============================================================
     var validPaths = [
         '/'
@@ -36,7 +36,20 @@ module.exports = function(app, passport, calendar, user, settings) {
     });
 
 
-    //INFO PAGE////////////////////////////////////////////////////////////////
+    //DASHBOARD PAGE///////////////////////////////////////////////////////////
+    app.get('/admin/dashboard', isLoggedIn, dashboard.index, passport.authenticate('local', { session: false }));
+
+
+    //BOOKINGS PAGE////////////////////////////////////////////////////////////
+    app.get('/admin/bookings', isLoggedIn, bookings.index, passport.authenticate('local', { session: false }));
+
+
+    //ACCOUNT PAGE//////////////////////////////////////////////////////////////
+    app.get('/admin/account', isLoggedIn, account.index, passport.authenticate('local', { session: false }));
+
+
+
+    //SETTINGS PAGE/////////////////////////////////////////////////////////////
     app.param('settingsId', settings.load);
 
     app.get('/admin/settings', isLoggedIn, settings.index, passport.authenticate('local', { session: false }));
@@ -113,7 +126,7 @@ module.exports = function(app, passport, calendar, user, settings) {
 
         // process the login form
         app.post('/login', passport.authenticate('local-login', {
-            successRedirect : 'admin/calendar-item', // redirect to the secure twitter-approval section
+            successRedirect : 'admin/dashboard', // redirect to the secure twitter-approval section
             failureRedirect : '/admin', // redirect back to the signup page if there is an error
             failureFlash : true // allow flash messages
         }));
