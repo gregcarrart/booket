@@ -1,13 +1,18 @@
-module.exports = function(app, passport, calendar, user, settings, dashboard, bookings, account) {
+module.exports = function(app, passport, calendar, user, customer, settings, dashboard, bookings, account) {
 // normal routes ===============================================================
-    var validPaths = [
-        '/'
-    ];
+    var User = require('../models/user');
+    var validPaths = [];
 
-    validPaths.forEach(function (path) {
-        app.get(path, function (req, res) {
-            return res.render('index', {
-                layout: null
+    User.find({}, function(err, user) {
+        user.forEach(function(user) {
+            validPaths.push('/' + user.name);
+        });
+
+        validPaths.forEach(function (path) {
+            app.get(path, function (req, res) {
+                return res.render('index', {
+                    layout: null
+                });
             });
         });
     });
@@ -19,7 +24,7 @@ module.exports = function(app, passport, calendar, user, settings, dashboard, bo
 
     // process the signup form
     app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/admin/twitter-approval', // redirect to the secure profile section
+        successRedirect : '/admin/dashboard', // redirect to the secure profile section
         failureRedirect : '/signup', // redirect back to the signup page if there is an error
         failureFlash : true // allow flash messages
     }));
@@ -50,30 +55,30 @@ module.exports = function(app, passport, calendar, user, settings, dashboard, bo
 
 
     //SETTINGS PAGE/////////////////////////////////////////////////////////////
-    app.param('settingsId', settings.load);
 
     app.get('/admin/settings', isLoggedIn, settings.index, passport.authenticate('local', { session: false }));
     app.post('/admin/settings/:settingsId', isLoggedIn, settings.update, passport.authenticate('local', { session: false }));
 
 
-    //USERS/////////////////////////////////////////////////////////////////////
-    app.param('userId', user.load);
-    app.param('userId', user.loadBySlug);
 
-    //list user
-    app.get('/admin/users', isLoggedIn, user.index, passport.authenticate('local', { session: false }));
-    app.get('/admin/users/page/:page?', isLoggedIn, user.index, passport.authenticate('local', { session: false }));
+    //CUSTOMERS/////////////////////////////////////////////////////////////////////
+    app.param('customerId', customer.load);
+    app.param('customerId', customer.loadBySlug);
+
+    //list customers
+    app.get('/admin/customers', isLoggedIn, customer.index, passport.authenticate('local', { session: false }));
+    app.get('/admin/customers/page/:page?', isLoggedIn, customer.index, passport.authenticate('local', { session: false }));
 
     //create user
-    app.post('/admin/users', isLoggedIn, user.create, passport.authenticate('local', { session: false }));
-    app.get('/admin/users/add_new', isLoggedIn, user.new, passport.authenticate('local', { session: false }));
+    app.post('/admin/customers', isLoggedIn, customer.create, passport.authenticate('local', { session: false }));
+    app.get('/admin/customers/add_new', isLoggedIn, customer.new, passport.authenticate('local', { session: false }));
 
     //delete user
-    app.get('/admin/users/:userId/destroy', isLoggedIn, user.destroy, passport.authenticate('local', { session: false }));
+    app.get('/admin/customers/:customerId/destroy', isLoggedIn, customer.destroy, passport.authenticate('local', { session: false }));
 
     //edit user (full editor)
-    app.post('/admin/users/:userId', isLoggedIn, user.update, passport.authenticate('local', { session: false }));
-    app.get('/admin/users/:userId', isLoggedIn, user.edit, passport.authenticate('local', { session: false }));
+    app.post('/admin/customers/:customerId', isLoggedIn, customer.update, passport.authenticate('local', { session: false }));
+    app.get('/admin/customers/:customerId', isLoggedIn, customer.edit, passport.authenticate('local', { session: false }));
 
 
 
@@ -97,12 +102,10 @@ module.exports = function(app, passport, calendar, user, settings, dashboard, bo
     app.get('/admin/calendar-item/:calendarId', isLoggedIn, calendar.edit, passport.authenticate('local', { session: false }));
 
     //API
-    app.get('/api/v1/calendar', calendar.all);
-
-
+    app.get('/:userSlug/events', calendar.all);
 
     //post appointment
-    app.post('/submit-appointment', calendar.clientCreate);
+    app.post('/:userSlug/submit-appointment', calendar.clientCreate);
 
 
 
@@ -112,6 +115,7 @@ module.exports = function(app, passport, calendar, user, settings, dashboard, bo
         req.logout();
         res.redirect('/admin');
     });
+
 
 // =============================================================================
 // AUTHENTICATE (FIRST LOGIN) ==================================================

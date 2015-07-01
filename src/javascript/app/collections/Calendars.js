@@ -2,11 +2,12 @@ var BaseCollection = require('collections/BaseCollection'),
     _ = require('lodash'),
     Promise = require('bluebird'),
     moment = require('moment'),
+    constants = require('utils/constants'),
     Calendar = Backbone.Model;
 
 module.exports = BaseCollection.extend({
 
-    endpoint: '/api/v1/calendar',
+    endpoint: '/'+ constants.USER_ID +'/events',
 
     comparator: 'order',
 

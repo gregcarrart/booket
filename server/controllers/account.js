@@ -18,9 +18,3 @@ exports.index = function(req, res){
     });
 };
 
-exports.all = function(req, res) {
-    User.find({}, function(err, user) {
-        return res.send(user);
-    });
-}
-

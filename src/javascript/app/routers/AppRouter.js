@@ -6,9 +6,9 @@ var _ = require('lodash');
 var AppRouter = Marionette.AppRouter.extend({
 
     appRoutes: {
-        '(/)': 'home',
+        ':userSlug(/)': 'home',
         'about(/)': 'about',
-        'success(/)': 'success',
+        ':userSlug/success(/)': 'success',
         'contact(/)': 'contact',
         '*default': 'defaultHandler'
     },

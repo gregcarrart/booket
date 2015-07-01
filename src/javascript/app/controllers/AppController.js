@@ -45,10 +45,8 @@ module.exports = Backbone.Marionette.Controller.extend({
         this.globalView = new GlobalView();
         this.baseView = new BaseView();
         this.headerView = new HeaderView();
-        this.navView = new NavView();
 
         app.regionHeader.show(this.headerView);
-        app.regionNav.show(this.navView);
 
         channels.globalChannel.on('navigate', this.navigate, this);
 

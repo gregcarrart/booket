@@ -4,16 +4,103 @@ var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
 var userSchema = mongoose.Schema({
-
-    local            : {
+    local: {
         email        : String,
-        password     : String,
+        password     : String
     },
     name: String,
-    group: String,
-    phone: String,
-    appointments: [String],
-    visits: Number
+    settings: {
+        businessName: {
+            type: String,
+            default: ''
+        },
+        address: {
+            type: String,
+            default: ''
+        },
+        phone: {
+            type: String,
+            default: ''
+        },
+        hours: {
+            type: Object,
+            default: {
+                monday: {
+                    open: '',
+                    close: ''
+                },
+                tuesday: {
+                    open: '',
+                    close: ''
+                },
+                wednesday: {
+                    open: '',
+                    close: ''
+                },
+                thursday: {
+                    open: '',
+                    close: ''
+                },
+                friday: {
+                    open: '',
+                    close: ''
+                },
+                saturday: {
+                    open: '',
+                    close: ''
+                },
+                sunday: {
+                    open: '',
+                    close: ''
+                }
+            }
+        },
+        closed: {
+            type: Array,
+            default: ['']
+        },
+        services: {
+            type: Array,
+            default: ['']
+        },
+        headerImage: {
+            type: String,
+            default: ''
+        },
+        logo: {
+            type: String,
+            default: ''
+        },
+        showServices: {
+            type: Boolean,
+            default: true
+        },
+        showPhone: {
+            type: Boolean,
+            default: true
+        },
+        showRequests: {
+            type: Boolean,
+            default: true
+        },
+        showMap: {
+            type: Boolean,
+            default: true
+        },
+        showHeaderImage: {
+            type: Boolean,
+            default: true
+        },
+        showLogo: {
+            type: Boolean,
+            default: true
+        },
+        user: {
+            type: String,
+            default: ''
+        }
+    },
+    slug: String
 });
 
 /**
@@ -25,6 +112,8 @@ userSchema.methods = {
 
         self.validate(function(err) {
             if (err) return cb(err);
+
+            self.slug = self.name.toLowerCase().split(' ').join('-').replace(/[^a-zA-Z0-9-_]+/ig, '');
 
             self.local.email = self.email;
             self.local.password = bcrypt.hashSync(self.password, bcrypt.genSaltSync(8), null);

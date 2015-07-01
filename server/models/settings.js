@@ -4,20 +4,95 @@ var bcrypt   = require('bcrypt-nodejs');
 
 // define the schema for our user model
 var infoSchema = mongoose.Schema({
-    name: String,
-    address: String,
-    phone: String,
-    hours: Object,
-    closed: [String],
-    services: [String],
-    headerImage: String,
-    logo: String,
-    showServices: Boolean,
-    showPhone: Boolean,
-    showRequests: Boolean,
-    showMap: Boolean,
-    showHeaderImage: Boolean,
-    showLogo: Boolean
+    name: {
+        type: String,
+        default: ''
+    },
+    address: {
+        type: String,
+        default: ''
+    },
+    phone: {
+        type: String,
+        default: ''
+    },
+    hours: {
+        type: Object,
+        default: {
+            monday: {
+                open: '',
+                close: ''
+            },
+            tuesday: {
+                open: '',
+                close: ''
+            },
+            wednesday: {
+                open: '',
+                close: ''
+            },
+            thursday: {
+                open: '',
+                close: ''
+            },
+            friday: {
+                open: '',
+                close: ''
+            },
+            saturday: {
+                open: '',
+                close: ''
+            },
+            sunday: {
+                open: '',
+                close: ''
+            }
+        }
+    },
+    closed: {
+        type: Array,
+        default: ['']
+    },
+    services: {
+        type: Array,
+        default: ['']
+    },
+    headerImage: {
+        type: String,
+        default: ''
+    },
+    logo: {
+        type: String,
+        default: ''
+    },
+    showServices: {
+        type: Boolean,
+        default: true
+    },
+    showPhone: {
+        type: Boolean,
+        default: true
+    },
+    showRequests: {
+        type: Boolean,
+        default: true
+    },
+    showMap: {
+        type: Boolean,
+        default: true
+    },
+    showHeaderImage: {
+        type: Boolean,
+        default: true
+    },
+    showLogo: {
+        type: Boolean,
+        default: true
+    },
+    user: {
+        type: String,
+        default: ''
+    }
 });
 
 /**

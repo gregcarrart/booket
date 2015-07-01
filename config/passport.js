@@ -4,6 +4,7 @@ var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var muliparty = require('multiparty');
 // load up the user model
 var User       = require('../server/models/user');
+var Settings   = require('../server/models/settings');
 
 // load the auth variables
 var configAuth = require('./auth.js'); // use this one for testing
@@ -113,9 +114,16 @@ module.exports = function(passport) {
 
                         // create the user
                         var newUser            = new User();
+                        var newUserSettings    = new Settings();
 
                         newUser.local.email    = email;
                         newUser.local.password = newUser.generateHash(password);
+                        newUser.name = req.body.name;
+                        newUser.slug = (req.body.name).toLowerCase().split(' ').join('-').replace(/[^a-zA-Z0-9-_]+/ig, '');
+
+                        newUserSettings.user = newUser._id;
+
+                        newUserSettings.save();
 
                         newUser.save(function(err) {
                             if (err)

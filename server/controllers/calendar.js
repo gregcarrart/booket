@@ -142,7 +142,8 @@ exports.clientCreate = function(req, res) {
         service: req.body.service,
         email: req.body.email,
         phone: req.body.phone,
-        request: req.body.request
+        request: req.body.request,
+        user: req.params.userSlug
     });
 
     var dateToDate = new Date(req.body.date);
@@ -243,7 +244,7 @@ exports.update = function(req, res) {
 };
 
 exports.all = function(req, res) {
-    Calendar.find({}, function(err, calendar) {
+    Calendar.find({user: req.params.userSlug}, function(err, calendar) {
         return res.send(calendar);
     });
 }

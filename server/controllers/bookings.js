@@ -26,7 +26,7 @@ exports.index = function(req, res){
         page: page
     };
 
-    Calendar.list(options, function(err, calendar) {
+    Calendar.find({user: req.user.slug}, function(err, calendar) {
         if (err) return res.render('500');
 
         Calendar.count().exec(function(err, count) {

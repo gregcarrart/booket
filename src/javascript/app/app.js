@@ -68,8 +68,7 @@ app = new Marionette.Application();
 
 app.addRegions({
     regionMain: mainTransitionRegion,
-    regionHeader: '#region-header',
-    regionNav: '#region-nav'
+    regionHeader: '#region-header'
 });
 
 app.Behaviors = app.Behaviors || {};

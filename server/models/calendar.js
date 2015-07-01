@@ -19,11 +19,11 @@ switch(config.util.getEnv('NODE_ENV')){
         console.log('env error');
 }
 
-
 var calendarSchema = new Schema({ 
     title: String,
     start: Date,
     end: Date,
+    user: String,
     date: Date,
     time: String,
     service: String,

@@ -1,7 +1,4 @@
 <div class="admin-body">
-    <a href="/admin/calendar-item/add_new" class="btn btn-success">Create New Appointment</a>
-    </br>
-    </br>
     <style>
         .fc-event{
             cursor: pointer;
@@ -16,7 +13,7 @@ $(document).ready(function() {
     $('#calendar').fullCalendar({
         eventSources: [
             {
-                url: '/api/v1/calendar',
+                url: '/{{user.name}}/events',
                 type: 'GET'
             }
         ],

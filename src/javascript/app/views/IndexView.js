@@ -2,6 +2,7 @@ var BaseLayoutView = require('./BaseLayoutView'),
     app = require('app/app'),
     template = require('templates/index.hbs'),
     channels = require('channels'),
+    constants = require('utils/constants'),
     paper = require('libs/paper-full.min'),
     helpers = require('../utils/helpers'),
     Appointment = require('../models/Appointment'),
@@ -149,7 +150,7 @@ module.exports = BaseLayoutView.extend({
                 request: formRequests
             });
 
-            app.appRouter.navigate('/success', { trigger: true });
+            app.appRouter.navigate(constants.USER_ID + '/success', { trigger: true });
         }
     },
 
