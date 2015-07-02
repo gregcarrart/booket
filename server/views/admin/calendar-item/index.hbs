@@ -3,8 +3,61 @@
         .fc-event{
             cursor: pointer;
         }
+
+        .fc-today-button {
+            -webkit-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5) !important;
+            -moz-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5) !important;
+            box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5) !important;
+        }
+
+        .fc button {
+            height: 3.1em;
+            padding: 0 1em;
+            text-transform: capitalize;
+            font-size: 1.4em;
+        }
+
+        .fc .fc-button-group > * {
+            margin: 0 0 0 1em;
+            -webkit-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5);
+            -moz-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5);
+            box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5);
+        }
+
+        .fc-state-down {
+            top: 2px;
+            left: 2px;
+            box-shadow: 1px 1px 0px 0px rgba(50, 50, 50, 0.5) !important;
+        }
+
+        .fc-state-default {
+            background-color: #ff5e5e;
+            background-image: none;
+            background-repeat: none;
+            border: none;
+            color: #fff;
+            text-shadow: inherit;
+            box-shadow: inherit;
+        }
+
+        .fc-state-default.fc-corner-right {
+            border-top-right-radius: 0px;
+            border-bottom-right-radius: 0px;
+        }
+
+        .fc-state-default.fc-corner-left {
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+        }
+
+        .fc-widget-header {
+            color: #fff;
+            background-color: #333;
+        }
     </style>
-    <div id="calendar"></div>
+    <div class="col col-15">
+        <div id="calendar"></div>
+    </div>
 </div>
 
 <script>

@@ -22,39 +22,78 @@ var userSchema = mongoose.Schema({
             type: String,
             default: ''
         },
-        hours: {
-            type: Object,
-            default: {
-                monday: {
-                    open: '',
-                    close: ''
+        hours: [{
+            monday: {
+                open: {
+                    type: String,
+                    default: '900'
                 },
-                tuesday: {
-                    open: '',
-                    close: ''
-                },
-                wednesday: {
-                    open: '',
-                    close: ''
-                },
-                thursday: {
-                    open: '',
-                    close: ''
-                },
-                friday: {
-                    open: '',
-                    close: ''
-                },
-                saturday: {
-                    open: '',
-                    close: ''
-                },
-                sunday: {
-                    open: '',
-                    close: ''
+                close: {
+                    type: String,
+                    default: '500'
                 }
-            }
-        },
+            },
+            tuesday: {
+                open: {
+                    type: String,
+                    default: '900'
+                },
+                close: {
+                    type: String,
+                    default: '500'
+                }
+            },
+            wednesday: {
+                open: {
+                    type: String,
+                    default: '900'
+                },
+                close: {
+                    type: String,
+                    default: '500'
+                }
+            },
+            thursday: {
+                open: {
+                    type: String,
+                    default: '900'
+                },
+                close: {
+                    type: String,
+                    default: '500'
+                }
+            },
+            friday: {
+                open: {
+                    type: String,
+                    default: '900'
+                },
+                close: {
+                    type: String,
+                    default: '500'
+                }
+            },
+            saturday: {
+                open: {
+                    type: String,
+                    default: '900'
+                },
+                close: {
+                    type: String,
+                    default: '500'
+                }
+            },
+            sunday: {
+                open: {
+                    type: String,
+                    default: '900'
+                },
+                close: {
+                    type: String,
+                    default: '500'
+                }
+            },
+        }],
         closed: {
             type: Array,
             default: ['']

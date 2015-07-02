@@ -109,6 +109,41 @@ helpers: {
             return options.fn(this);
         }
         return options.inverse(this);
+    },
+
+    contains: function(array, query, options) {
+        if (array.indexOf(query) > -1) {
+            return options.fn(this);
+        } else  {
+            return options.inverse(this);
+        }
+    },
+
+    translateHour: function(hour) {
+        var hourSub = hour.length > 3 ? hour.substring(0,2) : hour.substring(0,1);
+        var minutesSliced = hour.slice(-2);
+        var hourNum = parseInt(hourSub);
+        if (hourNum > 12) {
+            hourNum = hourNum - 12;
+        }
+
+        return hourNum.toString();
+    },
+
+    getMinutes: function(hour) {
+        var minutes = hour.slice(-2);
+
+        return minutes;
+    },
+
+    checkAmPm: function(hour, options) {
+        var hourSub = hour.length > 3 ? hour.substring(0,2) : hour.substring(0,1);
+
+        if (hourSub > 12) {
+            return options.fn(this);
+        } else {
+            return options.inverse(this);
+        }
     }
 }
 }));

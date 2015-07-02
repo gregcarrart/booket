@@ -57,7 +57,7 @@ module.exports = function(app, passport, calendar, user, customer, settings, das
     //SETTINGS PAGE/////////////////////////////////////////////////////////////
 
     app.get('/admin/settings', isLoggedIn, settings.index, passport.authenticate('local', { session: false }));
-    app.post('/admin/settings/:settingsId', isLoggedIn, settings.update, passport.authenticate('local', { session: false }));
+    app.post('/admin/settings/:userId', isLoggedIn, settings.update, passport.authenticate('local', { session: false }));
 
 
 

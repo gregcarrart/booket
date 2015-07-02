@@ -1,4 +1,169 @@
-.admin-body {
-	padding-left: 16.666%;
-	background-color: $adminOffWhite;
+input, button, textarea {
+    outline: none;
 }
+
+.admin-body {
+    padding-left: 18.75%;
+    margin-top: 3%;
+}
+
+.page-module {
+    background: $white;
+    padding: 4% 6.25%;
+    -webkit-box-shadow: 0.4em 0.4em 0px 0px rgba(50, 50, 50, 0.75);
+    -moz-box-shadow:    0.4em 0.4em 0px 0px rgba(50, 50, 50, 0.75);
+    box-shadow:         0.4em 0.4em 0px 0px rgba(50, 50, 50, 0.75);
+    margin-top: 3%;
+}
+
+input {
+    line-height: normal;
+    border: none;
+    border-bottom: 1px solid $adminGray;
+    width: 40%;
+    font-size: 1.8em;
+    margin-bottom: 1.5em;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+label {
+    font-size: 1.4em;
+
+    &:before, &:after {
+        content: '';
+        display: table;
+    }
+
+    &:after {
+        clear: both;
+    }
+}
+
+.settings-hours-container {
+    margin: 1em 1em 4em 1em;
+
+    .settings-hour {
+        margin-bottom: 0.5em;
+        max-height: 4em;
+
+        .hours-day {
+            display: inline-block;
+            min-width: 6em;
+            font-size: 1.4em;
+        }
+
+        .hours-inputs {
+            display: inline;
+            margin-right: 1em;
+
+            input {
+                width: 6%;
+                text-align: center;
+            }
+        }
+
+        .hours-to {
+            display: inline-block;
+            margin-right: 1em;
+            font-size: 1.4em;
+        }
+
+        .hours-closed {
+            display: inline-block;
+
+            input {
+                margin-left: 0.45em;
+            }
+        }
+    }
+}
+
+.settings-modules {
+    position: absolute;
+    margin: 4%;
+    top: 0;
+    right: 0;
+}
+
+.bootstrap-tagsinput {
+    border-radius: 0px;
+    border: none;
+    border-bottom: 1px solid $adminGray;
+    box-shadow: none;
+    min-height: 5em;
+    width: 40%;
+
+    input {
+        margin-top: 0.5em;
+    }
+
+    .label-info {
+        background-color: $adminRed1;
+        font-size: 1.8em;
+        padding: 0.5em 0.6em 0.6em 1em;
+    }
+}
+
+.bootstrap-switch.bootstrap-switch-small {
+    min-width: 67px;
+}
+
+.bootstrap-switch {
+    float: right;
+}
+
+.fc-view-container {
+    background-color: $white;
+    -webkit-box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
+    box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
+
+    .fc-event {
+        position: relative;
+        display: block;
+        font-size: .85em;
+        line-height: 2;
+        border-radius: 0;
+        border: 1px solid #ff5e5e;
+        background-color: #ff5e5e;
+        font-weight: normal;
+    }
+}
+
+.fc .fc-button-group > * {
+    margin: 0 0 0 1em;
+    -webkit-box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
+    -moz-box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
+    box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
+}
+
+.fc-state-default {
+    background-color: $adminRed1;
+    background-image: none;
+    background-repeat: none;
+    border-color: inherit;
+    color: $white;
+    text-shadow: inherit;
+    box-shadow: inherit;
+}
+
+.fc-state-default.fc-corner-right {
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+
+.fc-state-default.fc-corner-left {
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.fc-widget-header {
+    color: $white;
+    background-color: $adminGray;
+}
+
