@@ -7,7 +7,6 @@ var User     = require('../models/user'),
     extend = require('util')._extend;
 
 exports.index = function(req, res){
-    console.log(req.user.settings.hours[0]);
     return res.render('admin/settings/index', {
         layout: 'default-admin',
         title: 'Settings',

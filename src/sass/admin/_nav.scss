@@ -4,6 +4,18 @@
 .header-nav {
 	background-color: $adminRed1;
 
+	.nav-item {
+		@extend %transition-all-slow;
+
+		&:hover {
+			background-color: $adminRedActive;
+		}
+	}
+
+	.active {
+		background-color: $adminRedActive;
+	}
+
 	#header-logo {
 		background-color: $adminRed2;
 		background-image: url(../images/logo.svg);
@@ -39,15 +51,29 @@
 	li {
 		position: relative;
 		width: 100%;
+		@extend %transition-all-slow;
+
+		&:hover {
+			background-color: $adminGrayActive;
+		}
 
 		.nav-left-item {
-			padding: 16.666% 25%;
-
 			a {
 				color: $white;
 				font-size: 1.4em;
 				text-decoration: none;
+				padding: 16.666% 25%;
+				display: inline-block;
+
+				span {
+					position: relative;
+					top: -0.3em;
+				}
 			}
 		}
+	}
+
+	.active {
+		background-color: $adminGrayActive;
 	}
 }

@@ -26,7 +26,7 @@ exports.index = function(req, res){
         page: page
     };
 
-    Calendar.find({user: req.user.slug}, function(err, calendar) {
+    Calendar.find({user: req.user.id}, function(err, calendar) {
         if (err) return res.render('500');
         var date = new Date(calendar.date);
         var momentDate = moment(date).format('l');

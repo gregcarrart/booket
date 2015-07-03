@@ -15,7 +15,7 @@ exports.index = function(req, res){
     var momentDate = moment(today);
     var appointmentCounter = 0;
 
-    Calendar.find({user: req.user.slug}, function(err, calendar) {
+    Calendar.find({user: req.user.id}, function(err, calendar) {
         if (err) return res.render('500');
 
         for (var i=0; i < calendar.length; i++) {
@@ -30,7 +30,7 @@ exports.index = function(req, res){
             return res.render('admin/dashboard/index', {
                 user: req.user,
                 layout: 'default-admin',
-                title: 'Settings',
+                title: 'Dashboard',
                 calendar: calendar,
                 appointmentCounter: appointmentCounter,
                 message: req.flash('success'),

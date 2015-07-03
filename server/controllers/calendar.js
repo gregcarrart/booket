@@ -80,9 +80,9 @@ exports.index = function(req, res){
         return res.render('admin/calendar-item/index', {
             user: req.user,
             layout: 'default-admin',
-            title: 'Appointments',
+            title: 'Calendar',
             calendar: calendar,
-            userName: req.user.name.toLowerCase(),
+            userId: req.user._id,
             message: req.flash('success'),
             error:req.flash('error')
         });
@@ -94,37 +94,109 @@ exports.new = function(req, res) {
         layout: 'default-admin',
         title: 'Create New Appointment',
         calendar: new Calendar({}),
+        services: req.user.settings.services,
+        message: req.flash('success'),
+        error:req.flash('error')
+    });
+};
+
+exports.newDate = function(req, res) {
+    var date = new Date(req.params.dateString);
+    var momentDate = moment(date);
+
+    return res.render('admin/calendar-item/new', {
+        layout: 'default-admin',
+        title: 'Create New Appointment',
+        calendar: new Calendar({}),
+        date: momentDate.format('L').toString(),
+        services: req.user.settings.services,
         message: req.flash('success'),
         error:req.flash('error')
     });
 };
 
 exports.create = function(req, res) {
-    var form = new multiparty.Form();
-    form.parse(req, function(err, fields, files) {
-        var calendar = new Calendar(fields);
-        var accessToken = req.session.access_token;
-        var calendarId = 'en0l2o77far1l26216o1hitk9c@group.calendar.google.com';
-        var text = fields || 'Test';
+    var calendar = new Calendar({
+        title: req.body.title,
+        date: req.body.date,
+        time: req.body.time,
+        service: req.body.service,
+        email: req.body.email,
+        phone: req.body.phone,
+        request: req.body.request,
+        user: req.user.id
+    });
 
-        calendar.uploadAndUpdate(files, function(err) {
-            if (!err) {
-                req.flash('success', 'Information updated');
+    var dateToDate = new Date(req.body.date);
+    var momentDate = moment(dateToDate).format("MMM Do YYYY");
+    var timeN = parseInt(req.body.time);
+    var phoneString = req.body.phone;
+
+    var phoneNumber = '(' + phoneString.slice(0, 3) + ') ' + phoneString.slice(3, 6) + '-' + phoneString.slice(6);
+    
+    if (timeN > 12) {
+        timeN = timeN - 12;
+    }
+
+    var formatTime = (timeN + ':00' + (timeN < 12 && timeN > 9 ? 'am' : 'pm'));
+
+    var accessToken = req.session.access_token;
+    var calendarId = 'en0l2o77far1l26216o1hitk9c@group.calendar.google.com';
+
+    calendar.uploadAndUpdate(null, function(err) {
+        if (!err) {
+            req.flash('success', 'Information updated');
+        } else {
+            req.flash('error', 'There was an error');
+        }
+
+       
+        /*gcal(accessToken).events.quickAdd(calendarId, text, function(err, data) {
+            if(err) return res.send(500,err);
+            
+        });*/
+
+        var emailVal = req.body.email;
+        var nameVal = req.body.date;
+        var messageValToAdmin = 'Hello,<br><br>I would like to set an appointment for ' + momentDate + ' at ' + formatTime + '. My phone number is ' + phoneNumber +'.<br><br>Thank you,<br>' + req.body.title;
+        var messageValToUser = 'Hello,<br><br>Thank you for setting an appointment on ' + momentDate + ' at ' + formatTime + '. Please reply to this email if anything changes or you cannot make your appointment. Look forward to seeing you!<br><br>Thank you,<br>' + clientName;
+
+        var mailOptionsToAdmin= {
+            from: emailVal, // sender address
+            to: destinationEmail, // list of receivers. This is whoever you want to get the email when someone hits submit
+            subject: 'New Appointment for ' + momentDate + ' - booket scheduling app', // Subject line
+            html: messageValToAdmin // plaintext body
+        };
+
+        var mailOptionsToUser = {
+            from: destinationEmail, // sender address
+            to: emailVal, // list of receivers. This is whoever you want to get the email when someone hits submit
+            subject: 'Thank you! Your appointment is confirmed with ' + clientName + ' - booket scheduling app', // Subject line
+            html: messageValToUser // plaintext body
+        };
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptionsToAdmin, function (error, info) {
+            if (error) {
+                console.log(error);
             } else {
-                req.flash('error', 'There was an error');
+                console.log('Message sent: ' + info.response);
             }
-
-           
-            /*gcal(accessToken).events.quickAdd(calendarId, text, function(err, data) {
-                if(err) return res.send(500,err);
-                
-            });*/
-            return res.redirect('/admin/calendar-item/');
         });
+
+        // send mail with defined transport object
+        transporter.sendMail(mailOptionsToUser, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Message sent: ' + info.response);
+            }
+        });
+        return res.redirect('/admin/calendar-item/');
     });
 };
 
-exports.clientCreate = function(req, res) {
+/*exports.clientCreate = function(req, res) {
     var calendar = new Calendar({
         title: req.body.title,
         date: req.body.date,
@@ -193,7 +265,7 @@ exports.clientCreate = function(req, res) {
             }
         });
     });
-};
+};*/
 
 exports.destroy = function(req, res) {
     var calendar = req.calendar;
@@ -207,7 +279,6 @@ exports.edit = function(req, res) {
     var calendarDate = new Date(req.calendar.date);
     var momentDate = moment(calendarDate).format('l');
 
-    console.log(req.user.settings.services);
     return res.render('admin/calendar-item/edit', {
         layout: 'default-admin',
         title: 'Edit Appointment',
@@ -240,7 +311,8 @@ exports.update = function(req, res) {
 };
 
 exports.all = function(req, res) {
-    Calendar.find({user: req.params.userSlug}, function(err, calendar) {
+    var userId = req.params.userId;
+    Calendar.find({user: userId}, function(err, calendar) {
         return res.send(calendar);
     });
 }

@@ -94,6 +94,7 @@ module.exports = function(app, passport, calendar, user, customer, settings, das
     //create appointments
     app.post('/admin/calendar-item', isLoggedIn, calendar.create, passport.authenticate('google', { session: false }));
     app.get('/admin/calendar-item/add_new', isLoggedIn, calendar.new, passport.authenticate('local', { session: false }));
+    app.get('/admin/calendar-item/add_new/:dateString', isLoggedIn, calendar.newDate, passport.authenticate('local', { session: false }));
 
     //delete appointments
     app.get('/admin/calendar-item/:calendarId/destroy', isLoggedIn, calendar.destroy, passport.authenticate('local', { session: false }));
@@ -103,11 +104,11 @@ module.exports = function(app, passport, calendar, user, customer, settings, das
     app.get('/admin/calendar-item/:calendarId', isLoggedIn, calendar.edit, passport.authenticate('local', { session: false }));
 
     //API
-    app.get('/:userSlug/events', calendar.all);
-    app.get('/:userSlug/settings', user.all);
+    app.get('/:userId/events', calendar.all);
+    app.get('/:userId/settings', user.all);
 
     //post appointment
-    app.post('/:userSlug/submit-appointment', calendar.clientCreate);
+    app.post('/:userId/submit-appointment', calendar.create);
 
 
 

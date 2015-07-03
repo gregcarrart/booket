@@ -5,9 +5,9 @@
         }
 
         .fc-today-button {
-            -webkit-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5) !important;
-            -moz-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5) !important;
-            box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5) !important;
+            -webkit-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.2) !important;
+            -moz-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.2) !important;
+            box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.2) !important;
         }
 
         .fc button {
@@ -19,15 +19,15 @@
 
         .fc .fc-button-group > * {
             margin: 0 0 0 1em;
-            -webkit-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5);
-            -moz-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5);
-            box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.5);
+            -webkit-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.2);
+            -moz-box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.2);
+            box-shadow: 3px 3px 0px 0px rgba(50, 50, 50, 0.2);
         }
 
         .fc-state-down {
             top: 2px;
             left: 2px;
-            box-shadow: 1px 1px 0px 0px rgba(50, 50, 50, 0.5) !important;
+            box-shadow: 1px 1px 0px 0px rgba(50, 50, 50, 0.2) !important;
         }
 
         .fc-state-default {
@@ -54,6 +54,14 @@
             color: #fff;
             background-color: #333;
         }
+
+        .fc-day {
+            cursor: pointer;
+        }
+
+        .fc-day:hover {
+            background-color: #f9f9f9;
+        }
     </style>
     <div class="col col-15">
         <div id="calendar"></div>
@@ -66,13 +74,15 @@ $(document).ready(function() {
     $('#calendar').fullCalendar({
         eventSources: [
             {
-                url: '/{{userName}}/events',
+                url: '/{{userId}}/events',
                 type: 'GET'
             }
         ],
         eventClick: function(event) {
-            console.log(event._id);
             window.location.href = '/admin/calendar-item/' + event._id;
+        },
+        dayClick: function(date) {
+            window.location.href = '/admin/calendar-item/add_new/'+ date._d;
         }
     });
 });

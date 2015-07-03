@@ -27,32 +27,32 @@
 
 	<div class="row header-nav">
 		<div class="col col-2 square nav-item" id="header-logo"></div>
-		<div class="col col-2 square nav-item {{#equalsTo title "Dashboard"}} class="active"{{/equalsTo}}" id="header-dashboard"><a href="/admin/dashboard"></a></div>
-		<div class="col col-2 square nav-item {{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}" id="header-calendar"><a href="/admin/calendar-item"></a></div>
+		<div class="col col-2 square nav-item {{#equalsTo title "Dashboard"}} active{{/equalsTo}}" id="header-dashboard"><a href="/admin/dashboard"></a></div>
+		<div class="col col-2 square nav-item {{#equalsTo title "Calendar"}} active{{/equalsTo}}" id="header-calendar"><a href="/admin/calendar-item"></a></div>
 		<div class="col col-2 square nav-item {{#equalsTo title "Customers"}} class="active"{{/equalsTo}}" id="header-customers"><a href="/admin/customers"></a></div>
 	</div>
 
 	<div class="row">
 		<div class="col col-2" id="nav-left">
 			<ul>
-				<li{{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}>
-					<div class="nav-left-item table">
-						<a href="/admin/bookings">Bookings</a>
+				<li{{#equalsTo title "Bookings"}} class="active"{{/equalsTo}}>
+					<div class="nav-left-item">
+						<a href="/admin/bookings"><i class="fa fa-check-circle-o fa-2x"></i> <span>Bookings</span></a>
 					</div>
 				</li>
-				<li{{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}>
-					<div class="nav-left-item table">
-						<a href="/admin/settings">Settings</a>
+				<li{{#equalsTo title "Settings"}} class="active"{{/equalsTo}}>
+					<div class="nav-left-item">
+						<a href="/admin/settings"><i class="fa fa-cog fa-2x"></i> <span>Settings</span></a>
 					</div>
 				</li>
-				<li{{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}>
-					<div class="nav-left-item table">
-						<a href="/admin/account">Account</a>
+				<li{{#equalsTo title "Account"}} class="active"{{/equalsTo}}>
+					<div class="nav-left-item">
+						<a href="/admin/account"><i class="fa fa-user fa-2x"></i> <span>Account</span></a>
 					</div>
 				</li>
-				<li{{#equalsTo title "Calendar"}} class="active"{{/equalsTo}}>
-					<div class="nav-left-item table">
-						<a href="/logout">Logout</a>
+				<li{{#equalsTo title "Logout"}} class="active"{{/equalsTo}}>
+					<div class="nav-left-item">
+						<a href="/logout"><i class="fa fa-sign-out fa-2x"></i> <span>Logout</span></a>
 					</div>
 				</li>
 			</ul>

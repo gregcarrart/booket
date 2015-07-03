@@ -9,7 +9,7 @@ exports.index = function(req, res){
     res.render('admin/account/index', {
         user: req.user,
         layout: 'default-admin',
-        title: 'Users',
+        title: 'Account',
         user: req.user,
         message: req.flash('success'),
         error:req.flash('error')
