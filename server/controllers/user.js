@@ -126,8 +126,8 @@ exports.update = function(req, res) {
 };
 
 exports.all = function(req, res) {
-    User.find({}, function(err, user) {
-        return res.send(user);
+    User.find({slug: req.params.userSlug}, function(err, user) {
+        return res.send(user[0].settings);
     });
 }
 

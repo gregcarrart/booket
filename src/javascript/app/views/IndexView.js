@@ -6,6 +6,7 @@ var BaseLayoutView = require('./BaseLayoutView'),
     paper = require('libs/paper-full.min'),
     helpers = require('../utils/helpers'),
     Appointment = require('../models/Appointment'),
+    User = require('../models/User'),
     Velocity = require('velocity-animate');
 
 require('jquery-ui');
@@ -50,7 +51,9 @@ module.exports = BaseLayoutView.extend({
         };
     },
 
-    initialize: function () {},
+    initialize: function () {
+       console.log(this.options.user.models[0]);
+    },
 
     onBeforeRender: function () {},
 

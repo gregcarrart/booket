@@ -19,10 +19,11 @@ var app = require('app/app'),
     AppointmentView = require('views/AppointmentView'),
 
     // Collections
-    Calendars = require('collections/Calendars.js');
+    Calendars = require('collections/Calendars.js'),
+    User = require('collections/User.js');
 
     //Models
-    
+    //User = require('models/User.js');
 
 //Utilies
 var preloaders = app.preloaders;
@@ -54,6 +55,9 @@ module.exports = Backbone.Marionette.Controller.extend({
 
         this.collections.calendars = new Calendars();
         this.collections.calendars.fetch();
+
+        this.collections.user = new User();
+        this.collections.user.fetch();
 
         _.each(preloaders, _.bind(function (settings, identifier) {
             if (!settings.routeDependent) {
@@ -96,11 +100,13 @@ module.exports = Backbone.Marionette.Controller.extend({
         document.title = pageTitle;
 
         var view = new IndexView({
-            collection: this.collections.calendars,
-            title: pageTitle
-        });
+                collection: this.collections.calendars,
+                user: this.collections.user,
+                title: pageTitle
+            });
 
-        app.regionMain.show(view);
+            app.regionMain.show(view);
+
     },
 
     about: function () {

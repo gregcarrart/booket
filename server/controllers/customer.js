@@ -36,7 +36,7 @@ exports.index = function(req, res){
     //if(!req.session.access_token) return res.redirect('/google-auth');
 
     var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
-    var perPage = 300;
+    var perPage = 7;
     var options = {
         perPage: perPage,
         page: page
@@ -47,7 +47,7 @@ exports.index = function(req, res){
         Customer.count().exec(function(err, count) {
             return res.render('admin/customers/index', {
                 layout: 'default-admin',
-                title: 'Users',
+                title: 'Customers',
                 customers: customers,
                 page: page + 1,
                 pages: Math.ceil(count / perPage),

@@ -11,7 +11,7 @@ button {
 }
 
 .btn {
-   
+    color: $white;
 
     &:hover {}
 
@@ -23,13 +23,31 @@ button {
     &.disabled,
     &[disabled] {}
 
+    a {
+        color: $white;
+        text-decoration: none;
+    }
+
 }
 
-.btn-success {
+.btn-large {
     padding: 1.5em 3em;
-    background-color: #66cc99;
-    color: #fff;
     font-size: 1.8em;
 }
 
+.btn-medium {
+    font-size: 1.8em;
+    padding: 0.75em 1.5em;
+}
 
+.btn-success {
+    background-color: $btnSuccess;
+}
+
+.btn-primary {
+    background-color: $btnPrimary;
+}
+
+.btn-danger {
+    background-color: $btnDanger;
+}

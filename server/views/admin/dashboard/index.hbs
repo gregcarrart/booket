@@ -1,11 +1,21 @@
 <div class="admin-body">
-    <div class="row-fluid">
-        <h2>Welcome, {{user.name}}!</h2>
-
-        <div class="dashboard-module">
+    <div class="row">
+        <h2 class="inline">Welcome, {{user.name}}!</h2>
+        <div class="dashboard-time">
+            <div class="date"></div>
+        </div>
+    </div>
+    <div class="module-container">
+        <div class="dashboard-module col col-10">
             <p>You have {{appointmentCounter}} appointment(s) today. See all <a href="/admin/bookings">bookings</a>.</p>
         </div>
-        
-
     </div>
 </div>
+<script>
+
+function update() {
+  $('.date').html(moment().format('LLLL'));
+}
+
+setInterval(update, 1000);
+</script>

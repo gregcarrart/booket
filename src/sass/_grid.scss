@@ -154,6 +154,10 @@ $grid-columns: 12!default;
     vertical-align: middle;
 }
 
+.inline {
+    display: inline-block;
+}
+
 @include grid(12);
 
 @include grid(6, "xs");

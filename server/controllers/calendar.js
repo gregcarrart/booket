@@ -75,26 +75,16 @@ exports.loadBySlug = function(req, res, next, id) {
 exports.index = function(req, res){
     //if(!req.session.access_token) return res.redirect('/google-auth');
 
-    var page = (req.param('page') > 0 ? req.param('page') : 1) - 1;
-    var perPage = 300;
-    var options = {
-        perPage: perPage,
-        page: page
-    };
-
-    Calendar.list(options, function(err, calendar) {
+    Calendar.list({}, function(err, calendar) {
         if (err) return res.render('500');
-        Calendar.count().exec(function(err, count) {
-            return res.render('admin/calendar-item/index', {
-                user: req.user,
-                layout: 'default-admin',
-                title: 'Appointments',
-                calendar: calendar,
-                page: page + 1,
-                pages: Math.ceil(count / perPage),
-                message: req.flash('success'),
-                error:req.flash('error')
-            });
+        return res.render('admin/calendar-item/index', {
+            user: req.user,
+            layout: 'default-admin',
+            title: 'Appointments',
+            calendar: calendar,
+            userName: req.user.name.toLowerCase(),
+            message: req.flash('success'),
+            error:req.flash('error')
         });
     });
 };
@@ -214,10 +204,16 @@ exports.destroy = function(req, res) {
 };
 
 exports.edit = function(req, res) {
+    var calendarDate = new Date(req.calendar.date);
+    var momentDate = moment(calendarDate).format('l');
+
+    console.log(req.user.settings.services);
     return res.render('admin/calendar-item/edit', {
         layout: 'default-admin',
         title: 'Edit Appointment',
         calendar: req.calendar,
+        services: req.user.settings.services,
+        date: momentDate,
         message: req.flash('success'),
         error:req.flash('error')
     });
@@ -237,7 +233,7 @@ exports.update = function(req, res) {
                 req.flash('error', 'There was an error');
             }
 
-            return res.redirect('/admin/calendar-item/');
+            return res.redirect('/admin/bookings/');
         });
     });
 

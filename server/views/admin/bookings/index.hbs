@@ -1,25 +1,33 @@
 <div class="admin-body">
-    <div class="row-fluid">
+    <div class="row">
         <h2>Bookings</h2>
+    </div>
+    <div class="module">
         {{#each calendar}}
-        <div class="booking-module">
-            <div class="booking-name">
+        <div class="booking-module col col-12">
+            <div class="booking-name col col-5">
             	{{title}}
             </div>
-            <div class="booking-date">
-            	{{date}}
+            <div class="booking-date col col-4">
+            	{{formatDate date}}
             </div>
-            <div class="booking-time">
-            	{{time}}
+            <div class="booking-time col col-3">
+            	{{formatTime time}}
             </div>
-            <button class="booking-edit btn primary">
-            	<a href="/admin/calendar-item/{{_id}}">Edit</a>
-            </button>
-            <button class="booking-edit btn danger">
-            	<a href="/admin/calendar-item/{{_id}}/destroy">Delete</a>
-            </button>
+            <div class="booking-buttons col col-4">
+                <button class="booking-edit btn btn-danger btn-medium pull-right">
+                	<a href="/admin/calendar-item/{{_id}}/destroy">Delete</a>
+                </button>
+                <button class="booking-edit btn btn-primary btn-medium pull-right">
+                    <a href="/admin/calendar-item/{{_id}}">Edit</a>
+                </button>
+            </div>
         </div>
         {{/each}}
-
+    </div>
+    <div class="pagination">
+        <ul class="pagination">
+            {{#pagination pages page "bookings"}} {{/pagination}}
+        </ul>
     </div>
 </div>

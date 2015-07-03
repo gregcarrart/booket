@@ -1,27 +1,60 @@
 <div class="admin-body">
-    <div class="admin-body-inner">
-        <h2>Bookings</h2>
-        
-        <div class="admin-module">
-            <form method="post" action="/admin/account/{{user._id}}" enctype="multipart/form-data" role="form">
+    <div class="row">
+        <h2>Account</h2>
+    </div>
+        <div class="col col-10 page-module">
+            <form method="post" onsubmit="return checkValidPassword()" action="/admin/account" enctype="multipart/form-data" role="form">
                 <label>Name:</label>
                 <input type="text" class="form-control" name="name" value="{{user.name}}" required>
                 <br>
-                <label>E-mail<span style="color:#ff0000;">*</span>:</label>
+                <label>E-mail:</label>
                 <input type="email" class="form-control" name="email" value="{{user.local.email}}" required>
                 <br>
                 <label>Password:</label>
-                <input type="password" class="form-control" name="password" placeholder="Enter New Password" id="pass1" required>
+                <input type="password" class="form-control" name="password" placeholder="Enter New Password" id="pass1">
                 <br>
                 <label>Re-enter Password:</label>
-                <input type="password" class="form-control" name="password-check" placeholder="Re-enter New Password" id="pass2" onkeyup="checkPass(); return false;" required>
+                <input type="password" class="form-control" name="passwordCheck" placeholder="Re-enter New Password" id="pass2" onkeyup="checkPass(); return false;">
                 <span id="confirmMessage" class="confirmMessage"></span>
                 <br>
                 <div class="row">
-                    <div class="col-xs-12 col-sm-6">
-                        <button type="submit" class="btn btn-success">Update</button>
-                    </div>
+                    <button type="submit" class="btn btn-success btn-large">Update</button>
                 </div>
             </form>
         </div>
 </div>
+<script>
+function checkPass(){
+    //Store the password field objects into variables ...
+    var pass1 = document.getElementById('pass1');
+    var pass2 = document.getElementById('pass2');
+    //Store the Confimation Message Object ...
+    var message = document.getElementById('confirmMessage');
+    //Set the colors we will be using ...
+    var goodColor = "#66cc99";
+    var badColor = "#cc3333";
+    //Compare the values in the password field 
+    //and the confirmation field
+    if(pass1.value == pass2.value){ 
+        message.style.color = goodColor;
+        message.innerHTML = "Passwords Match!"
+    }else{
+        message.style.color = badColor;
+        message.innerHTML = "Passwords Do Not Match!"
+    }
+}
+
+function checkValidPassword() {
+    var pass1 = document.getElementById('pass1');
+    var pass2 = document.getElementById('pass2');
+
+    if (pass1.value !== '' && pass2.value !== '') {
+        if (pass1.value === pass2.value) {
+            return true;
+        } else {
+            alert('Passwords do not match!');
+            return false;
+        }
+    }
+}
+</script>

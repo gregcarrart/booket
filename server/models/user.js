@@ -22,78 +22,39 @@ var userSchema = mongoose.Schema({
             type: String,
             default: ''
         },
-        hours: [{
-            monday: {
-                open: {
-                    type: String,
-                    default: '900'
+        hours: {
+            type: Array,
+            default: {
+                'monday': {
+                    'open':'900',
+                    'close':'1700'
                 },
-                close: {
-                    type: String,
-                    default: '500'
-                }
-            },
-            tuesday: {
-                open: {
-                    type: String,
-                    default: '900'
+                'tuesday': {
+                    'open':'900',
+                    'close':'1700'
                 },
-                close: {
-                    type: String,
-                    default: '500'
-                }
-            },
-            wednesday: {
-                open: {
-                    type: String,
-                    default: '900'
+                'wednesday': {
+                    'open':'900',
+                    'close':'1700'
                 },
-                close: {
-                    type: String,
-                    default: '500'
-                }
-            },
-            thursday: {
-                open: {
-                    type: String,
-                    default: '900'
+                'thursday': {
+                    'open':'900',
+                    'close':'1700'
                 },
-                close: {
-                    type: String,
-                    default: '500'
-                }
-            },
-            friday: {
-                open: {
-                    type: String,
-                    default: '900'
+                'friday': {
+                    'open':'900',
+                    'close':'1700'
                 },
-                close: {
-                    type: String,
-                    default: '500'
-                }
-            },
-            saturday: {
-                open: {
-                    type: String,
-                    default: '900'
+                'saturday': {
+                    'open':'900',
+                    'close':'1700'
                 },
-                close: {
-                    type: String,
-                    default: '500'
+                'sunday': {
+                    'open':'900',
+                    'close':'1700'
                 }
-            },
-            sunday: {
-                open: {
-                    type: String,
-                    default: '900'
-                },
-                close: {
-                    type: String,
-                    default: '500'
-                }
-            },
-        }],
+            }
+        },
         closed: {
             type: Array,
             default: ['']
@@ -133,10 +94,6 @@ var userSchema = mongoose.Schema({
         showLogo: {
             type: Boolean,
             default: true
-        },
-        user: {
-            type: String,
-            default: ''
         }
     },
     slug: String

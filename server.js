@@ -23,6 +23,7 @@ var express         = require('express'),
 
     exphbs = require('express-handlebars'),
     config = require('config'),
+    moment = require('moment'),
     transporter;
 
 //Detect NODE_ENV
@@ -99,6 +100,22 @@ helpers: {
         return value;
     },
 
+    formatTime: function(time) {
+        var timeInt = parseInt(time);
+
+        if (timeInt > 12) {
+            timeInt = timeInt - 12;
+            timeInt.toString();
+            return (timeInt + ':00 pm');
+        } else if (timeInt === 12){
+            timeInt.toString();
+            return (timeInt + ':00 pm');
+        } else {
+            timeInt.toString();
+            return (timeInt + ':00 am');
+        }
+    },
+
     equalsTo: function(v1, v2, options) {
         if (v1 === v2) { return options.fn(this); } 
         else { return options.inverse(this); } 
@@ -144,6 +161,17 @@ helpers: {
         } else {
             return options.inverse(this);
         }
+    },
+
+    pagination: function(pages, current, section) {
+        var content = "";
+        for (var i = 1; i < pages + 1; i++) {
+            if (i != current)
+                content += '<li><a href="/admin/' + section + '/page/' + i + ' ">' + i + '</a></li>'
+            else
+                content += '<li class="active"><a href="/admin/' + section + '/page/' + i + ' ">' + i + '</a></li>'
+        };
+        return content
     }
 }
 }));

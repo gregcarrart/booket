@@ -8,12 +8,44 @@ input, button, textarea {
 }
 
 .page-module {
+    @extend %drop-shadow;
     background: $white;
     padding: 4% 6.25%;
-    -webkit-box-shadow: 0.4em 0.4em 0px 0px rgba(50, 50, 50, 0.75);
-    -moz-box-shadow:    0.4em 0.4em 0px 0px rgba(50, 50, 50, 0.75);
-    box-shadow:         0.4em 0.4em 0px 0px rgba(50, 50, 50, 0.75);
     margin-top: 3%;
+}
+
+.module {
+    margin-top: 3%;
+    min-height: 70em;
+}
+
+.pagination {
+    clear: both;
+
+    li {
+        @extend %drop-shadow-small;
+        display: inline-block;
+        background-color: $adminRed1;
+        font-size: 1.4em;
+        margin-right: 1em;
+
+        a {
+            display: inline-block;
+            color: $white;
+            text-decoration: none;
+            padding: 1em;
+        }
+
+        &:active {
+            margin-top: 2px;
+            margin-left: 2px;
+            box-shadow: 1px 1px 0px 0px rgba(50, 50, 50, 0.5) !important;
+        }
+    }
+
+    .active {
+        background-color: $adminRedActive;
+    }
 }
 
 input {
@@ -41,6 +73,18 @@ label {
 
     &:after {
         clear: both;
+    }
+}
+
+.dashboard-time {
+    display: inline-block;
+    float: right;
+
+    .date {
+        font-size: 3em;
+        width: 78%;
+        text-align: right;
+        line-height: 1.5em;
     }
 }
 
@@ -119,9 +163,7 @@ label {
 
 .fc-view-container {
     background-color: $white;
-    -webkit-box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
-    -moz-box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
-    box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
+    @extend %drop-shadow;
 
     .fc-event {
         position: relative;
@@ -137,9 +179,7 @@ label {
 
 .fc .fc-button-group > * {
     margin: 0 0 0 1em;
-    -webkit-box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
-    -moz-box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
-    box-shadow: 4px 4px 0px 0px rgba(50, 50, 50, 0.5);
+    @extend %drop-shadow;
 }
 
 .fc-state-default {
@@ -165,5 +205,38 @@ label {
 .fc-widget-header {
     color: $white;
     background-color: $adminGray;
+}
+
+.booking-module, .customer-module {
+    background-color: $white;
+    @extend %drop-shadow;
+    margin-bottom: 2em;
+
+    .booking-name, .booking-time, .booking-date, .booking-buttons, .customer-buttons, .customer-name, .customer-email, .customer-phone {
+        display: inline-block;
+    }
+
+    .booking-name, .booking-time, .booking-date, .customer-name, .customer-email, .customer-phone {
+        font-size: 1.8em;
+        padding: 0.75em 1.5em;
+    }
+}
+
+.dashboard-module {
+    background-color: $white;
+    @extend %drop-shadow;
+    margin-bottom: 4em;
+    padding: 3em 3em 3em 15em;
+    font-size: 1.4em;
+
+    &:before{
+        content: "";
+        width: 10em;
+        background-color: $adminRed2;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
 }
 

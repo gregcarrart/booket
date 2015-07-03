@@ -10,15 +10,15 @@ $baseUrl: env_or_default("STATIC_URL", "/static/");
 // -------------------------
 $white:                     #fff !default;
 $black:                     #444 !default;
-$gray: 						#464646 !default;
-$adminRed1: 				#ff5e5e !default;
-$adminRed2:					#cc3333 !default;
-$adminRedActive:			#fd4d4d !default;
-$adminGray:					#333333 !default;
-$adminGrayActive:			#4a4a4a !default;
-$adminOffWhite:				#efede5 !default;
-$adminGreen:				#66cc99 !default;
-$adminBlue:					#3377cc !default;
+$gray:                      #464646 !default;
+$adminRed1:                 #ff5e5e !default;
+$adminRed2:                 #cc3333 !default;
+$adminRedActive:            #fd4d4d !default;
+$adminGray:                 #333333 !default;
+$adminGrayActive:           #4a4a4a !default;
+$adminOffWhite:             #efede5 !default;
+$adminGreen:                #66cc99 !default;
+$adminBlue:                 #3377cc !default;
 
 // Scaffolding
 // -------------------------
@@ -48,7 +48,7 @@ $ultraBold:                 800 !default;
 $baseFontSize:              10px !default;
 $baseFontFamily:            $sans !default;
 $baseLineHeight:            22px !default;
-$baseLetterSpacing:			0.1em !default;
+$baseLetterSpacing:         0.1em !default;
 
 $headingsFontWeight:        $thin !default;
 $headingsFontFamily:        inherit !default;
@@ -63,6 +63,9 @@ $borderColor:               $black !default;
 $btnBackground:             $white !default;
 $btnBackgroundHighlight:    darken($white, 10%) !default;
 $btnBorder:                 darken($white, 10%) !default;
+$btnSuccess:                #66cc99 !default;
+$btnPrimary:                #3377cc !default;
+$btnDanger:                 #cc3333 !default;
 
 // Animation
 // -------------------------

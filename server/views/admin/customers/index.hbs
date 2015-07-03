@@ -1,0 +1,33 @@
+<div class="admin-body">
+    <div class="row">
+        <h2>Customers</h2>
+    </div>
+    <div class="module">
+        {{#each customer}}
+        <div class="customer-module col col-12">
+            <div class="customer-name col col-5">
+                {{name}}
+            </div>
+            <div class="customer-email col col-4">
+                {{email}}
+            </div>
+            <div class="customer-phone col col-3">
+                {{phone}}
+            </div>
+            <div class="customer-buttons col col-4">
+                <button class="customer-edit btn btn-danger btn-medium pull-right">
+                    <a href="/admin/customer/{{_id}}/destroy">Delete</a>
+                </button>
+                <button class="customer-edit btn btn-primary btn-medium pull-right">
+                    <a href="/admin/customer/{{_id}}">Edit</a>
+                </button>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="pagination">
+        <ul class="pagination">
+            {{#pagination pages page "customers"}} {{/pagination}}
+        </ul>
+    </div>
+</div>

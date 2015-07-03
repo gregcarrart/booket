@@ -28,12 +28,14 @@ exports.index = function(req, res){
 
     Calendar.find({user: req.user.slug}, function(err, calendar) {
         if (err) return res.render('500');
+        var date = new Date(calendar.date);
+        var momentDate = moment(date).format('l');
 
         Calendar.count().exec(function(err, count) {
             return res.render('admin/bookings/index', {
                 user: req.user,
                 layout: 'default-admin',
-                title: 'Settings',
+                title: 'Bookings',
                 calendar: calendar,
                 page: page + 1,
                 pages: Math.ceil(count / perPage),

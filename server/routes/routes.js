@@ -47,11 +47,12 @@ module.exports = function(app, passport, calendar, user, customer, settings, das
 
     //BOOKINGS PAGE////////////////////////////////////////////////////////////
     app.get('/admin/bookings', isLoggedIn, bookings.index, passport.authenticate('local', { session: false }));
+    app.get('/admin/bookings/page/:page?', isLoggedIn, bookings.index, passport.authenticate('local', { session: false }));
 
 
     //ACCOUNT PAGE//////////////////////////////////////////////////////////////
     app.get('/admin/account', isLoggedIn, account.index, passport.authenticate('local', { session: false }));
-
+    app.post('/admin/account', isLoggedIn, account.update, passport.authenticate('local', { session: false }));
 
 
     //SETTINGS PAGE/////////////////////////////////////////////////////////////
@@ -103,6 +104,7 @@ module.exports = function(app, passport, calendar, user, customer, settings, das
 
     //API
     app.get('/:userSlug/events', calendar.all);
+    app.get('/:userSlug/settings', user.all);
 
     //post appointment
     app.post('/:userSlug/submit-appointment', calendar.clientCreate);

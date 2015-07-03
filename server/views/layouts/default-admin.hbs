@@ -63,6 +63,12 @@
 		{{{body}}}
 	</div>
 
-		<script src="https://tablednd.googlecode.com/svn-history/r7/trunk/stable/jquery.tablednd.js"></script>
+		<script>
+        window.onload = function() {
+            $('.btn-warning').on('click', function(evt) {
+                 if (!confirm('Are you sure?')) evt.preventDefault();
+            });
+        }
+        </script>
 </body>
 </html>
