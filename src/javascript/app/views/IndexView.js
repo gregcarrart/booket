@@ -12,6 +12,12 @@ var BaseLayoutView = require('./BaseLayoutView'),
 require('jquery-ui');
 require('behaviors/GoogleMap');
 
+app.registerPreloader('home', {
+    collections: ['user', 'calendars']
+}, function (user) {
+    return user.pluck('headerImage');
+});
+
 module.exports = BaseLayoutView.extend({
 
     className: 'page page-index',
@@ -32,7 +38,90 @@ module.exports = BaseLayoutView.extend({
         submitMessage: '#message'
     },
 
-    templateHelpers: function() {},
+    templateHelpers: function() {
+        var user = this.options.user.models[0];
+        var phoneNum = '(' + user.get('phone').slice(0,3) + ') ' + user.get('phone').slice(3,6) + '-' + user.get('phone').slice(6);
+        var mondayOpen = formatTime(user.get('hours')[0].monday.open),
+            mondayClose = formatTime(user.get('hours')[0].monday.close),
+            tuesdayOpen = formatTime(user.get('hours')[0].tuesday.open),
+            tuesdayClose = formatTime(user.get('hours')[0].tuesday.close),
+            wednesdayOpen = formatTime(user.get('hours')[0].wednesday.open),
+            wednesdayClose = formatTime(user.get('hours')[0].wednesday.close),
+            thursdayOpen = formatTime(user.get('hours')[0].thursday.open),
+            thursdayClose = formatTime(user.get('hours')[0].thursday.close),
+            fridayOpen = formatTime(user.get('hours')[0].friday.open),
+            fridayClose = formatTime(user.get('hours')[0].friday.close),
+            saturdayOpen = formatTime(user.get('hours')[0].saturday.open),
+            saturdayClose = formatTime(user.get('hours')[0].saturday.close),
+            sundayOpen = formatTime(user.get('hours')[0].sunday.open),
+            sundayClose = formatTime(user.get('hours')[0].sunday.close);
+
+        function formatTime(time) {
+            var hourSub = time.length > 3 ? time.substring(0,2) : time.substring(0,1);
+            var minutesSliced = time.slice(-2);
+            var hourNum = parseInt(hourSub);
+            if (hourNum > 12) {
+                hourNum = hourNum - 12;
+                hourNum = hourNum.toString() + ':' + minutesSliced + ' pm';
+            } else if (hourNum === 12) {
+                hourNum = hourNum.toString() + ':' + minutesSliced + ' pm';
+            } else {
+                hourNum = hourNum.toString() + ':' + minutesSliced + ' am';
+            }
+
+            return hourNum.toString();
+        }
+
+        function checkClosed(day) {
+            var tempArray = [];
+            for (i = 0; i < user.get('closed').length; i++) {
+                if (user.get('closed')[i].indexOf(day) > -1) {
+                    tempArray.push(day);
+                }
+            }
+            
+            if (tempArray.length > 0) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+
+        return {
+            businessName: user.get('businessName'),
+            address: user.get('address'),
+            phone: user.get('phone'),
+            phoneFormat: phoneNum,
+            hoursMondayOpen: mondayOpen,
+            hoursMondayClose: mondayClose,
+            hoursTuesdayOpen: tuesdayOpen,
+            hoursTuesdayClose: tuesdayClose,
+            hoursWednesdayOpen: wednesdayOpen,
+            hoursWednesdayClose: wednesdayClose,
+            hoursThursdayOpen: thursdayOpen,
+            hoursThursdayClose: thursdayClose,
+            hoursFridayOpen: fridayOpen,
+            hoursFridayClose: fridayClose,
+            hoursSaturdayOpen: saturdayOpen,
+            hoursSaturdayClose: saturdayClose,
+            hoursSundayOpen: sundayOpen,
+            hoursSundayClose: sundayClose,
+            mondayIsClosed: checkClosed('monday'),
+            tuesdayIsClosed: checkClosed('tuesday'),
+            wednesdayIsClosed: checkClosed('wednesday'),
+            thursdayIsClosed: checkClosed('thursday'),
+            fridayIsClosed: checkClosed('friday'),
+            saturdayisClosed: checkClosed('saturday'),
+            sundayisClosed: checkClosed('sunday'),
+            services: user.get('services'),
+            showServices: user.get('showServices'),
+            showRequests: user.get('showRequests'),
+            showPhone: user.get('showPhone'),
+            showMap: user.get('showMap'),
+            showHeaderImage: ('showHeaderImage'),
+            showLogo: ('showLogo')
+        }
+    },
 
     events: {
         'submit': 'sendAppointment'
@@ -52,7 +141,7 @@ module.exports = BaseLayoutView.extend({
     },
 
     initialize: function () {
-       console.log(this.options.user.models[0]);
+       //console.log(this.options.user.models[0].get('address'));
     },
 
     onBeforeRender: function () {},
@@ -70,27 +159,35 @@ module.exports = BaseLayoutView.extend({
         this.collection.fetch();
         
         function nonWorkingDates(date){
-            var day = date.getDay(), Sunday = 0, Monday = 1, Tuesday = 2, Wednesday = 3, Thursday = 4, Friday = 5, Saturday = 6;
-            var closedDates = [];
-            var closedDays = [[Sunday], [Monday]];
-            for (var i = 0; i < closedDays.length; i++) {
-                if (day == closedDays[i][0]) {
-                    return [false];
-                }
-            }
-
-            for (i = 0; i < closedDates.length; i++) {
-                if (date.getMonth() == closedDates[i][0] - 1 &&
-                date.getDate() == closedDates[i][1] &&
-                date.getFullYear() == closedDates[i][2]) {
-                    return [false];
-                }
-            }
-
-            return [true];
+            console.log(date);
+            
         }
 
-        this.ui.formDate.datepicker({ minDate: 0, maxDate: '', beforeShowDay: nonWorkingDates});
+        this.ui.formDate.datepicker({ 
+                minDate: 0, 
+                maxDate: '', 
+                beforeShowDay: _.bind(function(date){
+                    var day = date.getDay(), sunday = 0, monday = 1, tuesday = 2, wednesday = 3, thursday = 4, friday = 5, saturday = 6;
+                    var closedDates = [];
+                    var closedDays = [this.options.user.models[0].get('closed')];
+
+                    for (var i = 0; i < closedDays.length; i++) {
+                        if (day == closedDays[i]) {
+                            return [false];
+                        }
+                    }
+
+                    for (i = 0; i < closedDates.length; i++) {
+                        if (date.getMonth() == closedDates[i][0] - 1 &&
+                        date.getDate() == closedDates[i][1] &&
+                        date.getFullYear() == closedDates[i][2]) {
+                            return [false];
+                        }
+                    }
+
+                    return [true];
+                },this)
+            });
 
         this.ui.formDate.change(_.bind(function() {
             this.ui.formTime.html('');

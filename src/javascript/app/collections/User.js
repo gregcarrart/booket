@@ -2,16 +2,13 @@ var BaseCollection = require('collections/BaseCollection'),
     _ = require('lodash'),
     Promise = require('bluebird'),
     moment = require('moment'),
-    constants = require('utils/constants'),
-    User = Backbone.Model;
+    constants = require('utils/constants');
 
 module.exports = BaseCollection.extend({
 
     endpoint: '/'+ constants.USER_ID +'/settings',
 
     comparator: 'order',
-
-    model: User,
 
     initialize: function () {
     	this.fullCollection = new Backbone.Collection();

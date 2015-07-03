@@ -2,21 +2,22 @@
     <br>
     <div class="col-xs-12 col-md-6">
         <h1>Info</h1>
-        <p>Faded Society BarberShop</p>
-        <p>212 E. Main Sreet, Alhambra</p>
-        <p><a href="tel:6266445872">(626) 644-5872</a></p>
+        <p>{{businessName}}</p>
+        <p>{{address}}</p>
+        <p><a href="tel:{{phone}}">{{phoneFormat}}</a></p>
         <span>Hours:</span>
         <ul>
-            <li>Saturday: 10:00 am - 7:00pm</li>
-            <li>Sunday: Closed</li>
-            <li>Monday: Closed</li>
-            <li>Tuesday: 10:00 am - 7:00pm</li>
-            <li>Wednesday: 10:00 am - 7:00pm</li>
-            <li>Thursday: 10:00 am - 7:00pm</li>
-            <li>Friday: 10:00 am - 7:00pm</li>
+            <li>Monday: {{#if mondayIsClosed}}Closed {{else}} {{hoursMondayOpen}} - {{hoursMondayClose}} {{/if}}</li>
+            <li>Tuesday: {{#if tuesdayIsClosed}}Closed {{else}} {{hoursTuesdayOpen}} - {{hoursTuesdayClose}} {{/if}}</li>
+            <li>Wednesday: {{#if wednesdayIsClosed}}Closed {{else}} {{hoursWednesdayOpen}} - {{hoursWednesdayClose}} {{/if}}</li>
+            <li>Thursday: {{#if thursdayIsClosed}}Closed {{else}} {{hoursThursdayOpen}} - {{hoursThursdayClose}} {{/if}}</li>
+            <li>Friday: {{#if fridayIsClosed}}Closed {{else}} {{hoursFridayOpen}} - {{hoursFridayClose}} {{/if}}</li>
+            <li>Saturday: {{#if saturdayisClosed}}Closed {{else}} {{hoursSaturdayOpen}} - {{hoursSaturdayClose}} {{/if}}</li>
+            <li>Sunday: {{#if sundayisClosed}}Closed {{else}} {{hoursSundayOpen}} - {{hoursSundayClose}} {{/if}}</li>
         </ul>
-
+        {{#if showMap}}
         <div id="map-canvas" style="height: 300px"></div>
+        {{/if}}
     </div>
     <form class="col-xs-12 col-md-6" id="form">
         <h1>Online booking</h1>
@@ -35,29 +36,33 @@
             </div>
         </div>
         <br>
+        {{#if showServices}}
         <label>Service<span style="color:#ff0000;">*</span>:</label>
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <select name="service" id="form-service" class="form-control" required>
                     <option disabled selected value="">Select Service</option>
-                    <option value="haircut">Haircut</option>
-                    <option value="shave">Shave</option>
-                    <option value="haircutShave">Haircut + Shave</option>
-                    <option value="cleanup">Clean-up</option>
-                    <option value="childrens">Children</option>
+                    {{#each services}}
+                    <option value="{{this}}">{{this}}</option>
+                    {{/each}}
                 </select>
             </div>
         </div>
         <br>
+        {{/if}}
         <label>E-mail<span style="color:#ff0000;">*</span>:</label>
         <input type="email" class="form-control" id="form-email" name="email" placeholder="Enter E-mail" required>
         <br>
+        {{#if showPhone}}
         <label>Phone<span style="color:#ff0000;">*</span>:</label>
         <input type="tel" class="form-control" id="form-phone" name="phone" placeholder="Enter Phone" required>
         <br>
+        {{/if}}
+        {{#if showRequests}}
         <label>Special Requests:</label>
         <textarea class="form-control" id="form-requests" rows="5" cols="10" name="request" id="update-content"></textarea>
         <br>
+        {{/if}}
         <div class="row">
             <div class="col-xs-12 col-sm-6">
                 <button type="submit" class="btn btn-success">Create Appointment</button>

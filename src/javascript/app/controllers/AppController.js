@@ -99,14 +99,15 @@ module.exports = Backbone.Marionette.Controller.extend({
         pageTitle = siteTitle + 'home';
         document.title = pageTitle;
 
-        var view = new IndexView({
-                collection: this.collections.calendars,
-                user: this.collections.user,
+        this.lastRoute = preloaders.home.preload(this.collections).spread(function (user, calendars) {
+            var view = new IndexView({
+                collection: calendars,
+                user: user,
                 title: pageTitle
             });
 
             app.regionMain.show(view);
-
+        });
     },
 
     about: function () {
