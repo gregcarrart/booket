@@ -109,7 +109,8 @@ exports.update = function(req, res) {
                 showServices: showServices,
                 showPhone: showPhone,
                 showRequests: showRequests,
-                showMap: showMap
+                showMap: showMap,
+                user: req.user.id
 
             }}, function() {
                 return res.redirect('/admin/settings');

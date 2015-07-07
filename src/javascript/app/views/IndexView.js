@@ -141,7 +141,7 @@ module.exports = BaseLayoutView.extend({
     },
 
     initialize: function () {
-       //console.log(this.options.user.models[0].get('address'));
+       console.log(this.options.user.models[0]);
     },
 
     onBeforeRender: function () {},
@@ -224,7 +224,7 @@ module.exports = BaseLayoutView.extend({
     sendAppointment: function (e) {
         e.preventDefault();
 
-        var appointment = new Appointment();
+        var appointment = new Appointment({urlRoot: '/'+ this.options.user.models[0].get('user') + '/submit-appointment'});
         var formTitle = this.ui.formTitle.val(),
             formDate = this.ui.formDate.val(),
             formTime = this.ui.formTime.val(),

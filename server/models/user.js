@@ -94,7 +94,8 @@ var userSchema = mongoose.Schema({
         showLogo: {
             type: Boolean,
             default: true
-        }
+        }, 
+        user: String,
     },
     slug: String
 });
