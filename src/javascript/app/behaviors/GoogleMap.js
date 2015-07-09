@@ -45,62 +45,64 @@ module.exports = app.Behaviors.GoogleMap = Marionette.Behavior.extend({
         }
 
         this.geocoder.geocode( { 'address': userAddress}, _.bind(function(results, status) {
-            var controlOptions = {
-                mapTypeControl: false,
-                mapTypeControlOptions: {
-                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                    position: google.maps.ControlPosition.BOTTOM_CENTER
-                },
-                zoomControl: true,
-                zoomControlOptions: {
-                    // style: google.maps.ZoomControlStyle.LARGE,
-                    position: google.maps.ControlPosition.RIGHT_TOP
-                },
-                scaleControl: false,
-                streetViewControl: false,
-                panControl: false,
-                // streetViewControlOptions: {
-                //     position: google.maps.ControlPosition.LEFT_TOP
-                // }
-            };
+            if (status == google.maps.GeocoderStatus.OK) {
+                var controlOptions = {
+                    mapTypeControl: false,
+                    mapTypeControlOptions: {
+                        style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                        position: google.maps.ControlPosition.BOTTOM_CENTER
+                    },
+                    zoomControl: true,
+                    zoomControlOptions: {
+                        // style: google.maps.ZoomControlStyle.LARGE,
+                        position: google.maps.ControlPosition.RIGHT_TOP
+                    },
+                    scaleControl: false,
+                    streetViewControl: false,
+                    panControl: false,
+                    // streetViewControlOptions: {
+                    //     position: google.maps.ControlPosition.LEFT_TOP
+                    // }
+                };
 
-            mapOptions = _.defaults(mapOptions, _.clone(gmaps.defaults, true));
-            mapOptions = _.defaults(mapOptions, controlOptions);
+                mapOptions = _.defaults(mapOptions, _.clone(gmaps.defaults, true));
+                mapOptions = _.defaults(mapOptions, controlOptions);
 
-            var map = this.map = new gapi.maps.Map(this.ui.mapCanvas.get(0), mapOptions);
-            map.setCenter(results[0].geometry.location);
+                var map = this.map = new gapi.maps.Map(this.ui.mapCanvas.get(0), mapOptions);
+                map.setCenter(results[0].geometry.location);
 
-            var infowindow = new google.maps.InfoWindow();
+                var infowindow = new google.maps.InfoWindow();
 
-            var locations = this.getOption('locations');
-            var bounds = new gapi.maps.LatLngBounds();
+                var locations = this.getOption('locations');
+                var bounds = new gapi.maps.LatLngBounds();
 
-            var marker = new gapi.maps.Marker({
-                position: results[0].geometry.location,
-                map: map,
-                icon: {
-                    url: assetsUrl(gmaps.markerIcon),
-                    scaledSize: new gapi.maps.Size(32, 52)
-                }
-            });
-            
-            bounds.extend(marker.position);
-
-            google.maps.event.addListenerOnce(map, 'idle', _.bind(function () {
-
-                _.defer(_.bind(function () {
-                    map.fitBounds(bounds);
-                    map.setZoom(mapOptions.zoom);
-                    if (locations.length === 1) {
-                        
+                var marker = new gapi.maps.Marker({
+                    position: results[0].geometry.location,
+                    map: map,
+                    icon: {
+                        url: assetsUrl(gmaps.markerIcon),
+                        scaledSize: new gapi.maps.Size(32, 52)
                     }
+                });
+                
+                bounds.extend(marker.position);
 
-                    if (showPlaces) {
-                        // this.addNearbyPlaces(infowindow);
-                    }
+                google.maps.event.addListenerOnce(map, 'idle', _.bind(function () {
+
+                    _.defer(_.bind(function () {
+                        map.fitBounds(bounds);
+                        map.setZoom(mapOptions.zoom);
+                        if (locations.length === 1) {
+                            
+                        }
+
+                        if (showPlaces) {
+                            // this.addNearbyPlaces(infowindow);
+                        }
+                    }, this));
+
                 }, this));
-
-            }, this));
+            }
         }, this));
 
         this.setupListeners();
