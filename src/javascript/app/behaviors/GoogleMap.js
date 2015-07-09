@@ -87,6 +87,10 @@ module.exports = app.Behaviors.GoogleMap = Marionette.Behavior.extend({
                 
                 bounds.extend(marker.position);
 
+                google.maps.event.addDomListener(window, 'resize', function() {
+                    map.setCenter(results[0].geometry.location);
+                });
+
                 google.maps.event.addListenerOnce(map, 'idle', _.bind(function () {
 
                     _.defer(_.bind(function () {
