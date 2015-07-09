@@ -47,6 +47,7 @@
 	height: 100%;
 	position: absolute;
 	background-color: $adminGray;
+	@extend %transition-all-slow;
 
 	li {
 		position: relative;

@@ -71,6 +71,7 @@ exports.update = function(req, res) {
 
         user.update(
             {settings: {
+                appointmentIncrement: fields.appointmentIncrementHours + fields.appointmentIncrementMinutes,
                 businessName: fields.name,
                 address: fields.address,
                 phone: fields.phone,

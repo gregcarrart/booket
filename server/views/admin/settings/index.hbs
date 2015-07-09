@@ -180,6 +180,14 @@
                     <div class="hours-closed">Closed:<input type="checkbox" name="closedSunday" {{#contains user.settings.closed "sunday"}}checked{{/contains}}></div>
                 </div>
             </div>
+            <label>Appointment Increment:</label>
+            <div class="settings-hours-container">
+                <div class="settings-hour">
+                    <div class="hours-inputs">
+                        <input class="form-number" type="number" maxlength="2" min="0" max="12" value="{{translateHour user.settings.appointmentIncrement}}" name="appointmentIncrementHours">hour(s)<input class="form-number" type="number" maxlength="2" min="0" max="59" value="{{getMinutes user.settings.appointmentIncrement}}" name="appointmentIncrementMinutes">minute(s)
+                    </div>
+                </div>
+            </div>
             <label>Services (Hit "Enter" after each entry):</label>
             <input type="text" class="form-control" data-role="tagsinput" name="services" value="{{user.settings.services}}"/>
             <div class="settings-modules">

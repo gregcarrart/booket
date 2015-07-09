@@ -1,4 +1,5 @@
 var Calendar     = require('../models/calendar'),
+    User = require('../models/user'),
     mongoose = require('mongoose'),
     hbs = require('hbs'),
     path = require('path'),
@@ -196,7 +197,7 @@ exports.create = function(req, res) {
     });
 };
 
-/*exports.clientCreate = function(req, res) {
+exports.clientCreate = function(req, res) {
     var calendar = new Calendar({
         title: req.body.title,
         date: req.body.date,
@@ -205,7 +206,7 @@ exports.create = function(req, res) {
         email: req.body.email,
         phone: req.body.phone,
         request: req.body.request,
-        user: req.params.userSlug
+        user: req.params.userId
     });
 
     var dateToDate = new Date(req.body.date);
@@ -265,7 +266,7 @@ exports.create = function(req, res) {
             }
         });
     });
-};*/
+};
 
 exports.destroy = function(req, res) {
     var calendar = req.calendar;
@@ -312,6 +313,7 @@ exports.update = function(req, res) {
 
 exports.all = function(req, res) {
     var userId = req.params.userId;
+
     Calendar.find({user: userId}, function(err, calendar) {
         return res.send(calendar);
     });

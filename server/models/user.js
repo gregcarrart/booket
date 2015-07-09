@@ -10,6 +10,10 @@ var userSchema = mongoose.Schema({
     },
     name: String,
     settings: {
+        appointmentIncrement: {
+            type: String,
+            default: ''
+        },
         businessName: {
             type: String,
             default: ''

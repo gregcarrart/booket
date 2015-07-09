@@ -7,11 +7,11 @@ module.exports = function(app, passport, calendar, user, customer, settings, das
         user.forEach(function(user) {
             validPaths.push('/' + user.name);
         });
-
-        validPaths.forEach(function (path) {
+        validPaths.forEach(function (path, i) {
             app.get(path, function (req, res) {
                 return res.render('index', {
-                    layout: null
+                    layout: null, 
+                    userId: user[i].id
                 });
             });
         });
@@ -56,7 +56,6 @@ module.exports = function(app, passport, calendar, user, customer, settings, das
 
 
     //SETTINGS PAGE/////////////////////////////////////////////////////////////
-
     app.get('/admin/settings', isLoggedIn, settings.index, passport.authenticate('local', { session: false }));
     app.post('/admin/settings/:userId', isLoggedIn, settings.update, passport.authenticate('local', { session: false }));
 
@@ -108,8 +107,7 @@ module.exports = function(app, passport, calendar, user, customer, settings, das
     app.get('/:userId/settings', user.all);
 
     //post appointment
-    app.post('/:userId/submit-appointment', calendar.create);
-
+    app.post('/:userId/submit-appointment', calendar.clientCreate);
 
 
 

@@ -7,7 +7,7 @@ var BaseCollection = require('collections/BaseCollection'),
 
 module.exports = BaseCollection.extend({
 
-    endpoint: '/'+ constants.USER_SLUG +'/events',
+    endpoint: '/'+ constants.USER_ID +'/events',
 
     comparator: 'order',
 

@@ -12,5 +12,4 @@ module.exports.TRANSITION_IN_CLASS = 'is-transitioning-in';
 module.exports.SECTION_HEADER_EXPAND = 'section-header-expand';
 module.exports.ASSETS_URL = window.assetsUrl || '/';
 module.exports.GMAPS_API_KEY = 'AIzaSyBBBRU_b5Jb8Q1D-QYSPiifmAJE4JmgkNA';
-module.exports.USER_ID = '';
-module.exports.USER_SLUG = window.userSlug;
+module.exports.USER_ID = window.userId;

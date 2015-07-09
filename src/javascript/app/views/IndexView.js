@@ -5,6 +5,7 @@ var BaseLayoutView = require('./BaseLayoutView'),
     constants = require('utils/constants'),
     paper = require('libs/paper-full.min'),
     helpers = require('../utils/helpers'),
+    moment = require('moment'),
     Appointment = require('../models/Appointment'),
     User = require('../models/User'),
     Velocity = require('velocity-animate');
@@ -140,9 +141,7 @@ module.exports = BaseLayoutView.extend({
         };
     },
 
-    initialize: function () {
-       console.log(this.options.user.models[0]);
-    },
+    initialize: function () {},
 
     onBeforeRender: function () {},
 
@@ -158,21 +157,17 @@ module.exports = BaseLayoutView.extend({
         
         this.collection.fetch();
         
-        function nonWorkingDates(date){
-            console.log(date);
-            
-        }
 
         this.ui.formDate.datepicker({ 
                 minDate: 0, 
                 maxDate: '', 
                 beforeShowDay: _.bind(function(date){
-                    var day = date.getDay(), sunday = 0, monday = 1, tuesday = 2, wednesday = 3, thursday = 4, friday = 5, saturday = 6;
+                    var momentDay = moment(date).format('dddd');
                     var closedDates = [];
-                    var closedDays = [this.options.user.models[0].get('closed')];
+                    var closedDays = this.options.user.models[0].get('closed');
 
                     for (var i = 0; i < closedDays.length; i++) {
-                        if (day == closedDays[i]) {
+                        if (momentDay.toLowerCase() == closedDays[i]) {
                             return [false];
                         }
                     }
@@ -192,31 +187,100 @@ module.exports = BaseLayoutView.extend({
         this.ui.formDate.change(_.bind(function() {
             this.ui.formTime.html('');
             this.collection.searchByDate(this.ui.formDate.val());
-            this.displayTimes();
+            this.displayTimes(this.ui.formDate.val());
         }, this));
 
     },
 
-    displayTimes: function () {
+    displayTimes: function (date) {
         this.takenTimes = [];
-        this.availableTimes = ['10', '11', '12', '13', '14', '15', '16', '17', '18', '19'];
+        this.availableTimes = [];
+        this.hours = [];
+        
+        var newDate = new Date(date);
+        var appointmentIncrement = this.options.user.models[0].get('appointmentIncrement');
+        var selectedDay = moment(newDate).format('dddd').toLowerCase();
+        var openTime = this.options.user.models[0].get('hours')[0][selectedDay].open;
+        var closeTime = this.options.user.models[0].get('hours')[0][selectedDay].close;
+        var totalAvailableHours = Math.round((closeTime - openTime) / appointmentIncrement);
+
+        function translateHour(hour) {
+            var hour = hour.toString();
+            var hourSub = hour.length > 3 ? hour.substring(0,2) : hour.substring(0,1);
+            var minutesSliced = hour.slice(-2);
+            var hourNum = parseInt(hourSub);
+            if (hourNum > 12) {
+                hourNum = hourNum - 12;
+            }
+            return hourNum.toString();
+        }
+
+        function getMinutes(hour) {
+            var hour = hour.toString();
+            var minutes = hour.slice(-2);
+
+            return minutes;
+        }
+
+        function checkAmPm(hour) {
+            var hour = hour.toString();
+            var hourSub = hour.length > 3 ? hour.substring(0,2) : hour.substring(0,1);
+            var minutesSliced = hour.slice(-2);
+            var hourNum = parseInt(hourSub);
+            if (hourNum >= 12) {
+                return 'pm';
+            } else {
+                return 'am';
+            }
+        }
+
+        function translateMinutes(openTime, time, index) {
+            var minutes = time.slice(-2);
+            var hour = time.length > 3 ? time.substring(0,2) : time.substring(0,1);
+            var startingHour = openTime.length > 3 ? openTime.substring(0,2) : openTime.substring(0,1);
+            hour = hour * 60;
+            var minutes = (hour + minutes) * index;
+
+            console.log(minutes % 60);
+        }
+
+        for (var i=0; i < totalAvailableHours; i++) {
+            var translatedMinutes = translateMinutes(openTime, appointmentIncrement, i);
+            var translatedHours = translateHour(openTime) + appointmentIncrement;
+            //console.log(translatedHours);
+            this.hours.push(translatedHours);
+            this.availableTimes.push(translatedHours + ':' + translatedMinutes + checkAmPm(translatedHours));
+        }
 
         _.each(this.collection.models, _.bind(function(model) {
-            this.takenTimes.push(model.get('time'));
+            var takenTime = (model.get('time') > 12 ? model.get('time') - 12 : model.get('time')) + (model.get('time').length < 3 ? ':00' : '') + (model.get('time') >= 12 ? 'pm' : 'am');
+            this.takenTimes.push(takenTime);
         }, this));
-
+        
         this.availableTimes = _.difference(this.availableTimes, this.takenTimes);
 
         _.each(this.availableTimes, _.bind(function(time) {
-            var timeN = parseInt(time);
-            if (timeN > 12) {
-                timeN = timeN - 12;
+            var timeSplit = time.split(/:|am|pm/).join('');
+            var hourSub = timeSplit.length > 3 ? timeSplit.substring(0,2) : timeSplit.substring(0,1); 
+            var minutesSliced = timeSplit.slice(-2);
+            var hourNum = parseInt(hourSub);
+            if (hourSub > 12) {
+                hourSub = hourSub - 12;
+            }
+
+            if (time.includes('pm') && time !== '12:00pm') {
+                var timeValue = time.split(/:|am|pm/).join('');
+                var timeValue = timeValue.length > 3 ? timeValue.substring(0,2) : timeValue.substring(0,1); 
+                var formattedTime = parseInt(timeValue) + 12;
+            } else {
+                var timeValue = time.split(/:|am|pm/).join('');
+                var formattedTime = parseInt(timeValue.length > 3 ? timeValue.substring(0,2) : timeValue.substring(0,1));
             }
 
             this.ui.formTime
                 .append($('<option></option>')
-                .attr('value', timeN)
-                .text(timeN + ':00' + (timeN < 12 && timeN > 9 ? 'am' : 'pm')));
+                .attr('value', formattedTime)
+                .text(time));
         }, this));
 
     },
@@ -224,7 +288,7 @@ module.exports = BaseLayoutView.extend({
     sendAppointment: function (e) {
         e.preventDefault();
 
-        var appointment = new Appointment({urlRoot: '/'+ this.options.user.models[0].get('user') + '/submit-appointment'});
+        var appointment = new Appointment();
         var formTitle = this.ui.formTitle.val(),
             formDate = this.ui.formDate.val(),
             formTime = this.ui.formTime.val(),
