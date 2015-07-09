@@ -199,10 +199,17 @@ module.exports = BaseLayoutView.extend({
         
         var newDate = new Date(date);
         var appointmentIncrement = this.options.user.models[0].get('appointmentIncrement');
+        var convertedIncrement = convertIncrement(appointmentIncrement);
         var selectedDay = moment(newDate).format('dddd').toLowerCase();
         var openTime = this.options.user.models[0].get('hours')[0][selectedDay].open;
         var closeTime = this.options.user.models[0].get('hours')[0][selectedDay].close;
-        var totalAvailableHours = Math.round((closeTime - openTime) / appointmentIncrement);
+        var totalAvailableHours = Math.round(((closeTime - openTime)/100) / (convertedIncrement));
+
+        function convertIncrement(increment) {
+            var hour = parseInt(increment.length > 3 ? increment.substring(0,2) : increment.substring(0,1));
+            var minute = parseInt(increment.slice(-2)) / 60;
+            return hour + minute;
+        }
 
         function translateHour(hour) {
             var hour = hour.toString();
@@ -234,22 +241,29 @@ module.exports = BaseLayoutView.extend({
             }
         }
 
-        function translateMinutes(openTime, time, index) {
+        function incrementHelper(openTime, time, index) {
             var minutes = time.slice(-2);
+            var minutesInc = minutes * index;
             var hour = time.length > 3 ? time.substring(0,2) : time.substring(0,1);
+            var hourInc = hour * index;
             var startingHour = openTime.length > 3 ? openTime.substring(0,2) : openTime.substring(0,1);
-            hour = hour * 60;
-            var minutes = (hour + minutes) * index;
+            var startingMinutes = openTime.slice(-2);
+            var momentObj = moment().set({'hour': startingHour, 'minutes': startingMinutes});
+            var increment = momentObj.add({minutes:minutesInc, hours:hourInc});
+            var newHour = increment.get('hour').toString();
+            var newMin = increment.get('minutes').toString();
 
-            console.log(minutes % 60);
+            if (newMin === '0') {
+                return newHour + newMin + '0';
+            } else {
+                return newHour + newMin;
+            }
         }
 
         for (var i=0; i < totalAvailableHours; i++) {
-            var translatedMinutes = translateMinutes(openTime, appointmentIncrement, i);
-            var translatedHours = translateHour(openTime) + appointmentIncrement;
-            //console.log(translatedHours);
-            this.hours.push(translatedHours);
-            this.availableTimes.push(translatedHours + ':' + translatedMinutes + checkAmPm(translatedHours));
+            var increment = incrementHelper(openTime, appointmentIncrement, i);
+            this.hours.push(increment);
+            this.availableTimes.push(translateHour(increment) + ':' + getMinutes(increment) + checkAmPm(increment));
         }
 
         _.each(this.collection.models, _.bind(function(model) {
