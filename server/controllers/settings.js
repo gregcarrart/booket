@@ -71,38 +71,38 @@ exports.update = function(req, res) {
 
         user.update(
             {settings: {
-                appointmentIncrement: fields.appointmentIncrementHours + (fields.appointmentIncrementMinutes.length < 2 ? fields.appointmentIncrementMinutes + '0' : fields.appointmentIncrementMinutes),
+                appointmentIncrement: fields.appointmentIncrementHours + (fields.appointmentIncrementMinutes[0].length < 2 ? '0' + fields.appointmentIncrementMinutes : fields.appointmentIncrementMinutes),
                 businessName: fields.name,
                 address: fields.address,
                 phone: fields.phone,
                 hours: {
                     monday: {
-                        open: checkAmPm(mondayOpen, fields.mondayOpen, fields.mondayOpenAmPm) + fields.mondayOpenMinutes,
-                        close: checkAmPm(mondayClose, fields.mondayClose, fields.mondayCloseAmPm) + fields.mondayCloseMinutes
+                        open: checkAmPm(mondayOpen, fields.mondayOpen, fields.mondayOpenAmPm) + (fields.mondayOpenMinutes[0].length < 2 ? '0' + fields.mondayOpenMinutes : fields.mondayOpenMinutes),
+                        close: checkAmPm(mondayClose, fields.mondayClose, fields.mondayCloseAmPm) + (fields.mondayCloseMinutes[0].length < 2 ? '0' + fields.mondayCloseMinutes : fields.mondayCloseMinutes)
                     },
                     tuesday: {
-                        open: checkAmPm(tuesdayOpen, fields.tuesdayOpen, fields.tuesdayOpenAmPm) + fields.tuesdayOpenMinutes,
-                        close: checkAmPm(tuesdayClose, fields.tuesdayClose, fields.tuesdayCloseAmPm) + fields.tuesdayCloseMinutes
+                        open: checkAmPm(tuesdayOpen, fields.tuesdayOpen, fields.tuesdayOpenAmPm) + (fields.tuesdayOpenMinutes[0].length < 2 ? '0' + fields.tuesdayOpenMinutes : fields.tuesdayOpenMinutes),
+                        close: checkAmPm(tuesdayClose, fields.tuesdayClose, fields.tuesdayCloseAmPm) + (fields.tuesdayCloseMinutes[0].length < 2 ? '0' + fields.tuesdayCloseMinutes : fields.tuesdayCloseMinutes)
                     },
                     wednesday: {
-                        open: checkAmPm(wednesdayOpen, fields.wednesdayOpen, fields.wednesdayOpenAmPm) + fields.wednesdayOpenMinutes,
-                        close: checkAmPm(wednesdayClose, fields.wednesdayClose, fields.wednesdayCloseAmPm) + fields.wednesdayCloseMinutes
+                        open: checkAmPm(wednesdayOpen, fields.wednesdayOpen, fields.wednesdayOpenAmPm) + (fields.wednesdayOpenMinutes[0].length < 2 ? '0' + fields.wednesdayOpenMinutes : fields.wednesdayOpenMinutes),
+                        close: checkAmPm(wednesdayClose, fields.wednesdayClose, fields.wednesdayCloseAmPm) + (fields.wednesdayCloseMinutes[0].length < 2 ? '0' + fields.wednesdayCloseMinutes : fields.wednesdayCloseMinutes)
                     },
                     thursday: {
-                        open: checkAmPm(thursdayOpen, fields.thursdayOpen, fields.thursdayOpenAmPm) + fields.thursdayOpenMinutes,
-                        close: checkAmPm(thursdayClose, fields.thursdayClose, fields.thursdayCloseAmPm) + fields.thursdayCloseMinutes
+                        open: checkAmPm(thursdayOpen, fields.thursdayOpen, fields.thursdayOpenAmPm) + (fields.thursdayOpenMinutes[0].length < 2 ? '0' + fields.thursdayOpenMinutes : fields.thursdayOpenMinutes),
+                        close: checkAmPm(thursdayClose, fields.thursdayClose, fields.thursdayCloseAmPm) + (fields.thursdayCloseMinutes[0].length < 2 ? '0' + fields.thursdayCloseMinutes : fields.thursdayCloseMinutes)
                     },
                     friday: {
-                        open: checkAmPm(fridayOpen, fields.fridayOpen, fields.fridayOpenAmPm) + fields.fridayOpenMinutes,
-                        close: checkAmPm(fridayClose, fields.fridayClose, fields.fridayCloseAmPm) + fields.fridayCloseMinutes
+                        open: checkAmPm(fridayOpen, fields.fridayOpen, fields.fridayOpenAmPm) + (fields.fridayOpenMinutes[0].length < 2 ? '0' + fields.fridayOpenMinutes : fields.fridayOpenMinutes),
+                        close: checkAmPm(fridayClose, fields.fridayClose, fields.fridayCloseAmPm) + (fields.fridayCloseMinutes[0].length < 2 ? '0' + fields.fridayCloseMinutes : fields.fridayCloseMinutes)
                     },
                     saturday: {
-                        open: checkAmPm(saturdayOpen, fields.saturdayOpen, fields.saturdayOpenAmPm) + fields.saturdayOpenMinutes,
-                        close: checkAmPm(saturdayClose, fields.saturdayClose, fields.saturdayCloseAmPm) + fields.saturdayCloseMinutes
+                        open: checkAmPm(saturdayOpen, fields.saturdayOpen, fields.saturdayOpenAmPm) + (fields.saturdayOpenMinutes[0].length < 2 ? '0' + fields.saturdayOpenMinutes : fields.saturdayOpenMinutes),
+                        close: checkAmPm(saturdayClose, fields.saturdayClose, fields.saturdayCloseAmPm) + (fields.saturdayCloseMinutes[0].length < 2 ? '0' + fields.saturdayCloseMinutes : fields.saturdayCloseMinutes)
                     },
                     sunday: {
-                        open: checkAmPm(sundayOpen, fields.sundayOpen, fields.sundayOpenAmPm) + fields.sundayOpenMinutes,
-                        close: checkAmPm(sundayClose, fields.sundayClose, fields.sundayCloseAmPm) + fields.sundayCloseMinutes
+                        open: checkAmPm(sundayOpen, fields.sundayOpen, fields.sundayOpenAmPm) + (fields.sundayOpenMinutes[0].length < 2 ? '0' + fields.sundayOpenMinutes : fields.sundayOpenMinutes),
+                        close: checkAmPm(sundayClose, fields.sundayClose, fields.sundayCloseAmPm) + (fields.sundayCloseMinutes[0].length < 2 ? '0' + fields.sundayCloseMinutes : fields.sundayCloseMinutes)
                     }
                 },
                 closed: closedArray,

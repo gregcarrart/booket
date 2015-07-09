@@ -255,6 +255,8 @@ module.exports = BaseLayoutView.extend({
 
             if (newMin === '0') {
                 return newHour + newMin + '0';
+            } else if (newMin.length < 2) {
+                return newHour + '0' + newMin;
             } else {
                 return newHour + newMin;
             }
