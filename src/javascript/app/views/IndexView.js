@@ -3,7 +3,6 @@ var BaseLayoutView = require('./BaseLayoutView'),
     template = require('templates/index.hbs'),
     channels = require('channels'),
     constants = require('utils/constants'),
-    paper = require('libs/paper-full.min'),
     helpers = require('../utils/helpers'),
     moment = require('moment'),
     Appointment = require('../models/Appointment'),
@@ -136,7 +135,8 @@ module.exports = BaseLayoutView.extend({
                 mapOptions: {
                     zoom: 15,
                     center: [34.096118, -118.124171]
-                }
+                },
+                userAddress: this.options.user.models[0].get('address')
             }
         };
     },

@@ -15,7 +15,8 @@ module.exports = app.Behaviors.GoogleMap = Marionette.Behavior.extend({
         mapOptions: {
             zoom: 10,
             center: [34.096118, -118.124171]
-        }
+        },
+        userAddress: ''
     },
 
     mapListeners: [],
@@ -34,91 +35,72 @@ module.exports = app.Behaviors.GoogleMap = Marionette.Behavior.extend({
 
         var mapOptions = this.getOption('mapOptions');
         var showPlaces = this.getOption('showPlaces');
+        var userAddress = this.options.userAddress;
+        this.address;
+
+        this.geocoder = new gapi.maps.Geocoder();
 
         if (_.isArray(mapOptions.center)) {
             mapOptions.center = new gapi.maps.LatLng(mapOptions.center[0], mapOptions.center[1]);
         }
 
-        var controlOptions = {
-            mapTypeControl: false,
-            mapTypeControlOptions: {
-                style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                position: google.maps.ControlPosition.BOTTOM_CENTER
-            },
-            zoomControl: true,
-            zoomControlOptions: {
-                // style: google.maps.ZoomControlStyle.LARGE,
-                position: google.maps.ControlPosition.RIGHT_TOP
-            },
-            scaleControl: false,
-            streetViewControl: false,
-            panControl: false,
-            // streetViewControlOptions: {
-            //     position: google.maps.ControlPosition.LEFT_TOP
-            // }
-        };
+        this.geocoder.geocode( { 'address': userAddress}, _.bind(function(results, status) {
+            var controlOptions = {
+                mapTypeControl: false,
+                mapTypeControlOptions: {
+                    style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+                    position: google.maps.ControlPosition.BOTTOM_CENTER
+                },
+                zoomControl: true,
+                zoomControlOptions: {
+                    // style: google.maps.ZoomControlStyle.LARGE,
+                    position: google.maps.ControlPosition.RIGHT_TOP
+                },
+                scaleControl: false,
+                streetViewControl: false,
+                panControl: false,
+                // streetViewControlOptions: {
+                //     position: google.maps.ControlPosition.LEFT_TOP
+                // }
+            };
 
-        mapOptions = _.defaults(mapOptions, _.clone(gmaps.defaults, true));
-        mapOptions = _.defaults(mapOptions, controlOptions);
+            mapOptions = _.defaults(mapOptions, _.clone(gmaps.defaults, true));
+            mapOptions = _.defaults(mapOptions, controlOptions);
 
-        var map = this.map = new gapi.maps.Map(this.ui.mapCanvas.get(0), mapOptions);
+            var map = this.map = new gapi.maps.Map(this.ui.mapCanvas.get(0), mapOptions);
+            map.setCenter(results[0].geometry.location);
 
-        var infowindow = new google.maps.InfoWindow();
+            var infowindow = new google.maps.InfoWindow();
 
-        var locations = this.getOption('locations');
-        var bounds = new gapi.maps.LatLngBounds();
-
-        /*_.each(locations, function (location) {
+            var locations = this.getOption('locations');
+            var bounds = new gapi.maps.LatLngBounds();
 
             var marker = new gapi.maps.Marker({
-                position: new gapi.maps.LatLng(location.data.geo[0], location.data.geo[1]),
+                position: results[0].geometry.location,
                 map: map,
                 icon: {
                     url: assetsUrl(gmaps.markerIcon),
                     scaledSize: new gapi.maps.Size(32, 52)
-                },
+                }
             });
-
-            //extend the bounds to include each marker's position
+            
             bounds.extend(marker.position);
-            // debugger;
-            gapi.maps.event.addListener(marker, 'click', (function (marker) {
-                return function () {
-                    if (location.template) {
-                        infowindow.setContent(location.template(location.data));
-                    } else {
-                        infowindow.setContent(location.data.name);
+
+            google.maps.event.addListenerOnce(map, 'idle', _.bind(function () {
+
+                _.defer(_.bind(function () {
+                    map.fitBounds(bounds);
+                    map.setZoom(mapOptions.zoom);
+                    if (locations.length === 1) {
+                        
                     }
 
-                    infowindow.open(map, marker);
-                };
-            })(marker));
-        }, this);*/
-        var marker = new gapi.maps.Marker({
-            position: new gapi.maps.LatLng(34.096118, -118.124171),
-            map: map,
-            icon: {
-                url: assetsUrl(gmaps.markerIcon),
-                scaledSize: new gapi.maps.Size(32, 52)
-            }
-        });
-        
-        bounds.extend(marker.position);
+                    if (showPlaces) {
+                        // this.addNearbyPlaces(infowindow);
+                    }
+                }, this));
 
-        google.maps.event.addListenerOnce(map, 'idle', _.bind(function () {
-
-            _.defer(_.bind(function () {
-                map.fitBounds(bounds);
-                map.setZoom(mapOptions.zoom);
-                if (locations.length === 1) {
-                    
-                }
-
-                if (showPlaces) {
-                    // this.addNearbyPlaces(infowindow);
-                }
             }, this));
-
         }, this));
 
         this.setupListeners();
